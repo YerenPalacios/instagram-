@@ -1,0 +1,123 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;1,100;1,300&display=swap');
+*{font-family: 'Roboto', sans-serif;}
+body{
+    background-color: #fafafa;
+}
+.post{
+    position: relative;
+    overflow: hidden;
+    max-width: 800px;
+    color:#262626;
+    background-color: #fff;
+    border: 1px solid #e6e6e6;
+    margin-bottom: 25px;
+}
+
+.post .head{
+    display: flex;
+    justify-content: space-between;
+    align-items: center
+}
+
+.post .head button{
+    background-color: transparent;
+    border:none;
+    font-size: 20px;
+    letter-spacing: 3px;
+    color: #262626;
+    margin-right: 15px;
+}
+
+.post .head .user{
+    display: flex;
+    align-items: center;
+    padding: 14px;
+    grid-gap: 15px;
+    font-weight:500;
+    font-size: 15px
+}
+
+.post .head .user p{
+    margin: 0;
+}
+
+.post .head .user img{
+    width: 35px;
+    border-radius: 50%
+}
+
+
+.post .images{
+    width: 100%;
+}
+.post .images img{
+    width: 100%;
+}
+
+.post .images > div > div {
+    width: 100% !important;
+}
+
+
+.post .text{
+    padding: 16px;
+    padding-top: 0;
+    font-size: 14px;
+}
+
+.post .last_text{
+    color: #8e8e8e
+}
+
+.post .text p:first-child{
+    margin-top:0
+}
+.post .last_text:last-child{
+    font-size: 12px;
+    text-transform: capitalize;
+}
+
+
+.post .buttons{
+    display: flex;
+    justify-content: space-between;
+    padding: 5px;
+}
+.post .buttons button{
+    background-color: transparent ;
+    border: none;
+    padding: 12px;
+    margin: 0 5px;
+    cursor: pointer;
+}
+.post .buttons button:hover{
+    opacity: .7;
+}
+
+
+.add_comment{
+    display: grid;
+    grid-template-columns: 50px auto 100px;
+    padding: 10px
+}
+.add_comment button{
+    background-color:transparent;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding:5px;
+    cursor:pointer;
+}
+
+.add_comment button:last-child{
+   color: #0095f6;
+   font-weight: 600;
+}
+
+.add_comment input{
+    border: none;
+    outline: none;
+    font-size: 15px;
+    padding-left: 10px;
+}
