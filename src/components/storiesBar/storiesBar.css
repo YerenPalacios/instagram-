@@ -1,0 +1,35 @@
+
+.stories_bar{
+    background-color: #fff;
+    border: 1px solid #e6e6e6;
+    padding: 16px 24px;
+    display: flex;
+    grid-gap: 30px;
+    margin-bottom: 30px;
+}
+
+.stories_bar .profile{
+    width:56px
+}
+
+.stories_bar .profile img{
+    width: 56px;
+    max-height: 56px;
+    border-radius: 50%;
+}
+
+.stories_bar .profile p{
+    font-size: 12px;
+    text-align: center;
+    font-weight: 100;
+    margin: 0;
+    padding-top: 5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.stories_bar .profile p a{
+    text-decoration: none;
+    color: #262626;
+}

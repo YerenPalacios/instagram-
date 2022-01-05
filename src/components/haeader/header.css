@@ -1,0 +1,36 @@
+header{
+    box-sizing: border-box;
+    width: 100%;
+    background-color: #fff;
+    border: 1px solid #e6e6e6;
+    display: grid;
+    align-items: center;
+    grid-template-columns: repeat(3, auto);
+    padding: 10px 20px;
+    grid-gap: 15px;
+}
+
+header .logo {
+    align-self: flex-end;
+}
+
+header input{
+    background-color: #fafafa;
+    border: 1px solid #dbdbdb;
+    color: #8e8e8e;
+    padding: 10px 15px;
+    outline: none;
+}
+
+header .icons{
+    display: flex;
+    grid-gap: 8px;
+    align-items: center;
+    justify-content: center;
+}
+header button{
+    background-color:transparent;
+    border:none;
+    display: flex;
+    align-items: center;
+}
