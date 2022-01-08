@@ -5,9 +5,13 @@ header{
     border: 1px solid #e6e6e6;
     display: grid;
     align-items: center;
+    justify-items: center;
     grid-template-columns: repeat(3, auto);
     padding: 10px 20px;
     grid-gap: 15px;
+    position:sticky;
+    top: 0;
+    z-index: 100;
 }
 
 header .logo {
@@ -15,11 +19,16 @@ header .logo {
 }
 
 header input{
-    background-color: #fafafa;
-    border: 1px solid #dbdbdb;
+    background-color: #efefef;
+    border: 0;
     color: #8e8e8e;
     padding: 10px 15px;
     outline: none;
+    border-radius: 10px;
+}
+header input::placeholder{
+    color:#aaa;
+    font-weight: 100;
 }
 
 header .icons{
@@ -33,4 +42,131 @@ header button{
     border:none;
     display: flex;
     align-items: center;
+}
+
+.search{
+    position: relative;
+}
+
+
+.search-list{
+    padding: 10px 0;
+    min-width: 350px;
+    position: absolute;
+    background-color:#fff;
+    left:50%;
+    top: calc(100% + 12px);
+    transform: translateX(-50%);
+    box-shadow: 0 -1px 5px 1px rgb(0 0 0 / 10%) ;
+    z-index: 110;
+    border-radius: 5px;
+    min-height: 300px;
+}
+.search-list::before{
+    content:"";
+    z-index: 0;
+    position: absolute;
+    left:50%;
+    width: 12px;
+    height: 12px;
+    background-color: #fff;
+    transform: translateX(-50%) rotate(45deg);
+    border-bottom-color: #fff;
+    top: -5px;
+}
+
+.search-list .user{
+    display: flex;
+    font-size: 14px;
+    padding: 8px 16px
+}
+.search-list > div{
+    display: grid;
+    align-items: center;
+}
+.search-list p{
+    margin: 0;
+}
+.search-list p:last-of-type{
+    color:#aaa;
+    font-weight: 100;
+}
+
+.search-list img{
+    width: 44px;
+    max-height: 44px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+header .user-menu{
+    position: relative;
+}
+
+header .menu{
+    position: absolute;
+    right: -10px;
+    top:calc(100% + 10px);
+    background-color: #fff;
+    box-shadow: 0 -1px 5px 1px rgb(0 0 0 / 10%) ;
+    font-size: 14px;
+    padding: 5px 0;
+}
+header .menu p{
+    padding: 10px 20px;
+    padding-right: 60px;
+    margin:0;
+    width: 100%;
+    box-sizing: border-box;
+    white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+}
+header .menu p svg{
+    width:15px;
+    margin-right: 10px;
+}
+header .menu p:hover{
+    background-color: #f8f8f8
+}
+header .menu p:last-of-type{
+    border-top: 1px solid #ddd;
+}
+
+header .menu::before{
+    content:"";
+    z-index: 0;
+    position: absolute;
+    right: 24px;
+    width: 12px;
+    height: 12px;
+    background-color: #fff;
+    transform: rotate(45deg);
+    border-bottom-color: #fff;
+    top: -5px;
+}
+
+header .user-icon img {
+    width:100%;
+    border-radius: 50%;
+    display: flex;
+}
+header .user-icon{
+    margin: 0 6px;
+    border-radius: 50%;
+    overflow: hidden;
+    width:25px;
+    border-radius:50%;
+    outline: 1px solid #242424;
+    border: 1px solid #fff;
+}
+
+
+.loading{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    opacity: .3;
 }

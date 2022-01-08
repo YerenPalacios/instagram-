@@ -6,12 +6,13 @@ import reportWebVitals from './reportWebVitals';
 import {BrowserRouter, Routes, Route} from 'react-router-dom'
 
 import Home from './pages/home'
+import Login from './pages/login';
 
 ReactDOM.render(
   <BrowserRouter>
     <Routes>
-      <Route path="/" element={<App/>}/>
-      <Route path="/h" element={<Home/>}/>
+      <Route path="/login" element={<Login/>}/>
+      <Route path="/" element={<Home/>}/>
     </Routes>
   </BrowserRouter>,
   document.getElementById('root')

@@ -1,6 +1,6 @@
 import './post.css'
 import { useState } from 'react'
-
+import { Navigate, useNavigate } from "react-router-dom";
 import SimpleImageSlider from 'react-simple-image-slider'
 import moment from 'moment'
 import {default as ico} from './../icons'
@@ -33,7 +33,7 @@ function CommentForm({ onComment, setText, text }) {
 
 
 export default function Post({ data}) {
-
+    const navigate = useNavigate()
     
     const images = data.images.map(img => ({ url: img.image }))
     var date = moment(data.created_at).fromNow()
