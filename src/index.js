@@ -1,18 +1,21 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {BrowserRouter, Routes, Route} from 'react-router-dom'
 
 import Home from './pages/home'
 import Login from './pages/login';
+import Profile from './pages/profile';
 
 ReactDOM.render(
   <BrowserRouter>
     <Routes>
       <Route path="/login" element={<Login/>}/>
       <Route path="/" element={<Home/>}/>
+      <Route path="/:username" element={<Profile/>}/>
+      <Route path="/:username/saved" element={<div>guardados</div>}/>
+      <Route path="/edit" element={<div>edit</div>}/>
     </Routes>
   </BrowserRouter>,
   document.getElementById('root')

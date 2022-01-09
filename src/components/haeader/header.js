@@ -1,7 +1,7 @@
 import {default as ico} from '../icons'
 import './header.css'
 import { useState, useEffect, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import gif from './ZKZg.gif'
 import api from '../../api.json'
 import { getUserSesion } from '../../helpers';
@@ -57,7 +57,7 @@ function useComponentVisible(initialIsVisible) {
     return { ref, isVisible, setIsComponentVisible };
 }
 
-function UserMenu({icon}){
+function UserMenu({icon, username}){
     const navigate = useNavigate()
     const { ref, isVisible } = useComponentVisible(false);
 
@@ -73,10 +73,10 @@ function UserMenu({icon}){
             </div>
             {isVisible && (
                 <div className="menu">
-                    <p>{ico.profile} Perfil</p>
-                    <p>{ico.save} Guardado</p>
-                    <p>{ico.settings} Configuración</p>
-                    <p>{ico.change} Cambiar de cuenta</p>
+                    <Link to={"/"+username}>{ico.profile} Perfil</Link>
+                    <Link to={`${username}/saved`}>{ico.save} Guardado</Link>
+                    <Link to={"/edit"}>{ico.settings} Configuración</Link>
+                    <Link to="">{ico.change} Cambiar de cuenta</Link>
                     <p onClick={logout} >Salir</p>
                 </div>
             )}
@@ -104,12 +104,12 @@ export default function Header(){
                 {showList? <Search loading={listLoading} users={usersList}/> : null}
             </div>
             <div className="icons">
-                <button>{ico.home}</button>
+                <Link to="/">{ico.home}</Link>
                 <button>{ico.share}</button>
                 <button>{ico.add}</button>
                 <button>{ico.find}</button>
                 <button>{ico.like_svg}</button>
-                <UserMenu icon={user.image}/>
+                <UserMenu username={user.username} icon={user.image}/>
             </div>
         </header>
     )
