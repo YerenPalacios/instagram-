@@ -112,7 +112,7 @@ header .menu{
     font-size: 14px;
     padding: 5px 0;
 }
-header .menu p{
+header .menu a{
     padding: 10px 20px;
     padding-right: 60px;
     margin:0;
@@ -122,21 +122,26 @@ header .menu p{
     display: inline-flex;
     align-items: center;
     cursor: pointer;
+    color:inherit;
+    text-decoration: none;
 }
-header .menu p svg{
+header .menu a svg{
     width:15px;
     margin-right: 10px;
 }
-header .menu p:hover{
+header .menu a:hover{
     background-color: #f8f8f8
 }
-header .menu p:last-of-type{
+header .menu p{
     border-top: 1px solid #ddd;
+    padding: 10px 20px;
+    padding-right: 60px;
+    cursor: pointer;
 }
 
 header .menu::before{
+    box-shadow: -3px -4px 5px -1px rgb(0 0 0 / 10%);
     content:"";
-    z-index: 0;
     position: absolute;
     right: 24px;
     width: 12px;

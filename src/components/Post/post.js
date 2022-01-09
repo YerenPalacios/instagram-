@@ -4,6 +4,8 @@ import { Navigate, useNavigate } from "react-router-dom";
 import SimpleImageSlider from 'react-simple-image-slider'
 import moment from 'moment'
 import {default as ico} from './../icons'
+import {getToken} from '../../helpers'
+
 
 const api = "http://localhost:8000/"
 
@@ -57,7 +59,10 @@ export default function Post({ data}) {
     const handleLike = () => {
         fetch(api + 'like/', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 
+                'Content-Type': 'application/json',
+                'Authorization':getToken()
+             },
             body: JSON.stringify({ post: data.id })
         }).then(res => res.json())
             .then(data => {
@@ -69,7 +74,10 @@ export default function Post({ data}) {
     const handleComment = () => {
         fetch(api + 'comment/', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 
+                'Content-Type': 'application/json',
+                'Authorization':getToken()
+            },
             body: JSON.stringify({ post: data.id, text: text })
         }).then(res => res.json())
             .then(data => {
