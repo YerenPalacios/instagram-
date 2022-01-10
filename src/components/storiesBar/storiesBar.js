@@ -23,14 +23,14 @@ export default function StoriesBar(){
         return () => controller.abort()
     }, [])
 
-
+    console.log(profiles)
     if (profiles.length != 0) {
         return(
             <div className="stories_bar">
                 {profiles.map((p,i)=>(
                     <div key={i} className="profile">
                         <img src={p.image? p.image : testImg} alt="" />
-                        <p><Link to={"/"+p.name}>{p.name}</Link></p>
+                        <p><Link to={"/"+p.username}>{p.username}</Link></p>
                     </div>
                 ))}
                 

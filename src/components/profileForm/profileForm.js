@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import api from '../../api.json'
-import {getToken} from '../../helpers'
+import {getToken, getUserSesion, UpdateUserSesion} from '../../helpers'
 import './profileForm.css'
 
 
 export function ProfileForm(){
-    const {username} = useParams()
+    const [auth,setAuth] = useState(getUserSesion())
     const [user, setUser] = useState({})
 
     const [updateData, setUpdateData] = useState({
@@ -15,7 +15,7 @@ export function ProfileForm(){
     })
 
     useEffect(() => {
-        fetch(api.url+"user/"+username,{
+        fetch(api.url+"user/"+auth.user.username,{
             headers: {'Authorization':getToken()}
         })
         .then(res => res.json())
@@ -26,7 +26,7 @@ export function ProfileForm(){
                 email:data.email
             })
         })
-    }, [])
+    }, [auth])
 
     const handleUpdateData = ({target}) => {
         setUpdateData({
@@ -36,7 +36,20 @@ export function ProfileForm(){
     }
 
     const handleSubmitData = ()=>{
-        console.log(updateData)
+        fetch(api.url+"user/"+auth.user.username,{
+            method: 'PUT',
+            headers: {
+                'Authorization':getToken(),
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(updateData)
+        }).then(res => res.json())
+        .then(data => {
+            if (UpdateUserSesion(data)){
+                setAuth(getUserSesion())
+            }
+            
+        })
     }
 
     return(

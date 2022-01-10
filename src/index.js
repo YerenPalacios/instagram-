@@ -7,6 +7,7 @@ import {BrowserRouter, Routes, Route} from 'react-router-dom'
 import Home from './pages/home'
 import Login from './pages/login';
 import Profile from './pages/profile';
+import Edit from './pages/edit';
 
 ReactDOM.render(
   <BrowserRouter>
@@ -15,7 +16,7 @@ ReactDOM.render(
       <Route path="/" element={<Home/>}/>
       <Route path="/:username" element={<Profile/>}/>
       <Route path="/:username/saved" element={<div>guardados</div>}/>
-      <Route path="/edit" element={<div>edit</div>}/>
+      <Route path="/edit" element={<Edit/>}/>
     </Routes>
   </BrowserRouter>,
   document.getElementById('root')

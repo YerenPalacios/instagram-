@@ -97,7 +97,7 @@ export default function Post({ data}) {
             <div className="head">
                 <div className="user">
                     <img src={data.user.image} />
-                    <p>{data.user.name}</p>
+                    <p>{data.user.username}</p>
                 </div>
                 <button>•••</button>
             </div>

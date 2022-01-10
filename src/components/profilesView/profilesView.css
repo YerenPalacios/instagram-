@@ -1,0 +1,51 @@
+.profilesView{
+    display: grid;
+    grid-template-columns: 40% auto;
+    align-items:flex-start;
+    color: hsl(0, 0%, 15%);
+}
+
+
+.profilesView .user-image{
+    border-radius: 50%;
+    overflow: hidden;
+    margin: 0 23%;
+    border: 4px solid #fff;
+    box-shadow: 0 0 2px 1px #ccc;
+}
+
+.profilesView img {
+    width: 100%;
+    display: flex;
+}
+
+.profile-data{
+    padding-right: 6vw;
+}
+
+.profile-data h1{
+    font-weight: 100;
+    font-size: 28px;
+    color: #262626;
+    margin:10px 0
+}
+
+.profile-name{
+    display: flex;
+    align-items: center;
+    justify-content: space-between
+}
+.profile-nums{
+    display: grid;
+    font-weight: 100;
+    grid-template-columns: repeat(3,auto);
+}
+
+.profile-data .name{
+    margin:0;
+    margin-bottom: 5px;
+}
+.profile-data .desc{
+    margin:0;
+    font-weight: 100;
+}
