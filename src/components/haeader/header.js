@@ -1,5 +1,5 @@
 import {default as ico} from '../icons'
-import './header.css'
+import './header.scss'
 import { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import gif from './ZKZg.gif'
@@ -90,7 +90,7 @@ export default function Header(){
     const [showList, setShowList] = useState(false)
     const {user} = getUserSesion()
     const [listLoading, setListLoading] = useState(false)
-    const [showNewPostDiv, setShowNewPostDiv] = useState(true);
+    const [showNewPostDiv, setShowNewPostDiv] = useState(false);
 
     const handleFocus = () => {
         setShowList(!showList)
@@ -108,8 +108,8 @@ export default function Header(){
             <div className="icons">
                 <Link to="/">{ico.home}</Link>
                 <button>{ico.share}</button>
-                <button>{ico.add}</button>
-                <button onClick={()=>setShowNewPostDiv(!showNewPostDiv)}>{ico.find}</button>
+                <button onClick={()=>setShowNewPostDiv(true)}>{ico.add}</button>
+                <button>{ico.find}</button>
                 <button>{ico.like_svg}</button>
                 <UserMenu username={user.username} icon={user.image}/>
             </div>
