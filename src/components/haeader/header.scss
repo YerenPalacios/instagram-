@@ -12,37 +12,41 @@ header{
     position:sticky;
     top: 0;
     z-index: 100;
-    color: #262626
-}
+    color: #262626;
 
-header .logo {
-    align-self: flex-end;
-}
+    .logo {
+        align-self: flex-end;
+    }
 
-header input{
-    background-color: #efefef;
-    border: 0;
-    color: #8e8e8e;
-    padding: 10px 15px;
-    outline: none;
-    border-radius: 10px;
-}
-header input::placeholder{
-    color:#aaa;
-    font-weight: 100;
-}
+    input{
+        background-color: #efefef;
+        border: 0;
+        color: #8e8e8e;
+        padding: 10px 15px;
+        outline: none;
+        border-radius: 10px;
+    }
 
-header .icons{
-    display: flex;
-    grid-gap: 8px;
-    align-items: center;
-    justify-content: center;
-}
-header button{
-    background-color:transparent;
-    border:none;
-    display: flex;
-    align-items: center;
+    input::placeholder{
+        color:#aaa;
+        font-weight: 100;
+    }
+
+    .icons{
+        display: flex;
+        grid-gap: 8px;
+        align-items: center;
+        justify-content: center;
+    }
+
+    button, a{
+        background-color:transparent;
+        border:none;
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+    }
+    
 }
 
 .search{
