@@ -5,9 +5,7 @@ import SimpleImageSlider from 'react-simple-image-slider'
 import moment from 'moment'
 import {default as ico} from './../icons'
 import {getToken} from '../../helpers'
-
-
-const api = "http://localhost:8000/"
+import api from '../../api.json'
 
 
 // TODO: posts must have just user comments in main view
@@ -57,7 +55,7 @@ export default function Post({ data}) {
     const [text, setText] = useState('')
 
     const handleLike = () => {
-        fetch(api + 'like/', {
+        fetch(api.url + 'like/', {
             method: 'POST',
             headers: { 
                 'Content-Type': 'application/json',
@@ -72,7 +70,7 @@ export default function Post({ data}) {
     }
 
     const handleComment = () => {
-        fetch(api + 'comment/', {
+        fetch(api.url + 'comment/', {
             method: 'POST',
             headers: { 
                 'Content-Type': 'application/json',

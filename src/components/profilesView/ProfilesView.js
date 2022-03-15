@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react"
 import {useParams} from 'react-router-dom'
+import {Link} from 'react-router-dom'
+
 import api from '../../api.json'
 import './profilesView.css'
 
@@ -7,15 +9,30 @@ export default function ProfilesView(){
     const {username} = useParams()
     const isSesionUser = false
     const [user, setUser] = useState({})
+    const [notFound, setNotFound] = useState(false)
 
     useEffect(()=>{
         fetch(api.url+'user/'+username)
         .then(res => res.json())
         .then(data => {
-            setUser(data)
+            if(data.detail){
+                setNotFound(true)
+            } else {
+               setUser(data) 
+            }
+            
         })
     },[])
 
+    if (notFound){
+        return(
+            <div className="not-found">
+                <h1>Esta página no está disponible.</h1>
+                <p>Es posible que el enlace que seleccionaste esté roto o que se haya eliminado la página.</p>
+                <Link to="/">Volver a Instagram.</Link>
+            </div>
+        )
+    }
     return(
         <div className="profilesView">
             <div className="user-image">
