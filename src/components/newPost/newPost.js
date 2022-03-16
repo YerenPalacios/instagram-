@@ -2,13 +2,26 @@ import icon from './new-post.png'
 import './newPost.scss'
 import { useState, useEffect, useRef } from 'react';
 import { getToken, getUserSesion } from '../../helpers';
+import { useNavigate } from 'react-router-dom';
 import api from './../../api.json'
 import {default as ico} from './../icons'
+import SimpleImageSlider from 'react-simple-image-slider'
+
+
+function getBase64(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = error => reject(error);
+    });
+  }
 
 
 export default function NewPost({hide}){
+    const navigate = useNavigate()
     const [addingMedia, setAddingMedia] = useState(true)
-    const [actualMedia, setActualMedia] = useState(null)
+    const [actualMedia, setActualMedia] = useState([])
     const [publishing, setPublishing] = useState(false)
     const [data, setData] = useState({
         images:[],
@@ -18,14 +31,23 @@ export default function NewPost({hide}){
 
     const handleAddFile = ({target}) => {
         // TODO: remember how to send images :u
-        console.log(target.files)
         const files = Array.from(target.files)
-        // let images = files.forEach(file => {
-        //     return 'nada'
-        // })
+        const images = data.images
+        const preview = []
+
+        files.forEach(i=>{
+            preview.push({url:URL.createObjectURL(i)})
+            console.log(i)
+            
+            getBase64(i).then(
+                data => images.push(data)
+            )
+        })
+        
+        setData({...data, images:images});
+        setActualMedia(preview)
+
         setAddingMedia(false)
-        setData({...data, images:files})
-        setActualMedia(URL.createObjectURL(target.files[0]))
         setPublishing(true)
     }
 
@@ -40,17 +62,23 @@ export default function NewPost({hide}){
     }
 
     const createPost = () => {
-        console.log(data)
+        // TODO: separate fetch in a function with catch errors 
+        console.log(data.images)
         hide(!true)
         fetch(api.url+'post/',{
             method: 'POST',
             headers: {
-                'Authorization': getToken(), 
-                'Content-type': 'application/json',
+                'Authorization': getToken(),
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
             },
             body: JSON.stringify(data),
         }).then(res => res.json())
-        .then(data => console.log(data))
+        .then(data => {
+            console.log(data)
+            window.location.reload(false)
+        })
+        .catch(error => console.log(error))
     }
 
     return(
@@ -62,7 +90,7 @@ export default function NewPost({hide}){
                     <div>
                         <img src={icon} alt="add photo" />
                         <p>Arrastra las fotos y los videos aquí</p>
-                        <input onChange={handleAddFile} type="file" id="images"/>
+                        <input onChange={handleAddFile} type="file" id="images" multiple/>
                         <label htmlFor='images'>seleccionar de la computadora</label>
                     </div>
                 </div>
@@ -70,10 +98,16 @@ export default function NewPost({hide}){
                 <div className="new-post">
                     <h1>Crea una nueva publicación <label htmlFor="send">Compartir</label></h1>
                     <form onSubmit={handleSubmit} className='form'>
-                        <div className="actualmedia">
-                            <img src={actualMedia} alt="" />
+                        <div className="actual-media">
+                            <SimpleImageSlider
+                                width={296}
+                                height={304}
+                                images={actualMedia}
+                                showBullets={true}
+                                showNavs={true}
+                            />
                         </div>
-                        <div>
+                        <div className="form-data">
                             <div className="user">
                                 <img src={api.url+user.image} alt="" />
                                 <p>User name</p>
