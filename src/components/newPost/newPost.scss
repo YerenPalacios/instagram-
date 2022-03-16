@@ -29,7 +29,7 @@
         width: 200px;
     }
 
-    div{
+    > div{
         padding: 15px 20px;
         min-height: 250px;
         display: flex;
@@ -112,5 +112,19 @@
         border:none;
         resize: none;
         outline: none;
+    }
+    .form-data{
+        padding:10px;
+    }
+}
+
+
+// TODO: get this out
+.rsis-container{
+    padding:0;
+    :last-child, .rsis-image{
+        background-size: auto 100% !important;
+        background-position: center !important;
+        background-repeat: no-repeat !important
     }
 }

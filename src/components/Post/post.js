@@ -1,4 +1,4 @@
-import './post.css'
+import './post.scss'
 import { useState } from 'react'
 import { Navigate, useNavigate } from "react-router-dom";
 import SimpleImageSlider from 'react-simple-image-slider'
