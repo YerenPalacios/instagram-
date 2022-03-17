@@ -19,7 +19,6 @@ function getBase64(file) {
 
 
 export default function NewPost({hide}){
-    const navigate = useNavigate()
     const [addingMedia, setAddingMedia] = useState(true)
     const [actualMedia, setActualMedia] = useState([])
     const [publishing, setPublishing] = useState(false)
