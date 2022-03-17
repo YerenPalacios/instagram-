@@ -5,16 +5,17 @@ import Header from '../components/haeader/header'
 import {useNavigate} from 'react-router-dom'
 import StoriesBar from '../components/storiesBar/storiesBar'
 import './pages.css'
-import {getToken} from '../helpers'
+import {api_, getToken} from '../helpers'
+import Error from '../components/errors/error'
 
 
 async function getData(path){
-    const res = await fetch(api.url+path+'/',{
+    const res = await fetch(api.url+path,{
         headers:{'Authorization':getToken()},
     })
-    if (!res.ok){
-        return false
-    }
+    // if (!res.ok){
+    //     return false
+    // }
     const data = await res.json()
     return data
     
@@ -23,11 +24,25 @@ async function getData(path){
 export default function Home(){
     const navigate = useNavigate()
     const [posts, setPosts] = useState([])
+    const [error, setError] = useState(false)
+    const url = api.url+'post/'
+    
+    const options = {
+        method: 'GET',
+        headers:{
+            'Authorization':getToken()
+        },
+    }
     
     useEffect(()=>{
-        getData('post').then(data => {
-            data == false? navigate('/login'): setPosts(data)
-            
+        fetch(url, options)
+        .then(res=>{
+            if (!res.ok) setError(res)
+            return res.json()
+        })
+        .then(data => {
+            setPosts(data) 
+            setError(false)
         })
     },[])
     
@@ -37,6 +52,7 @@ export default function Home(){
 
     return(
         <div>
+            {error?<Error error={error}/>:null}
             <Header/>
             
             <div className="container">
