@@ -6,13 +6,9 @@ import moment from 'moment'
 import {default as ico} from './../icons'
 import {getToken} from '../../helpers'
 import api from '../../api.json'
-
+import PostOptions from '../postOptions/postOptions';
 
 // TODO: posts must have just user comments in main view
-// add window for detail post with more coments from
-// add comment real fetch
-// add save post
-
 
 function CommentForm({ onComment, setText, text }) {
 
@@ -31,10 +27,8 @@ function CommentForm({ onComment, setText, text }) {
     )
 }
 
-
 export default function Post({ data}) {
-    const navigate = useNavigate()
-    
+    const [options, setOptions] = useState(false)
     const images = data.images.map(img => ({ url: img.image }))
     var date = moment(data.created_at).fromNow()
     
@@ -92,12 +86,13 @@ export default function Post({ data}) {
 
     return (
         <div className="post">
+            {options?<PostOptions id={data.id} hide={setOptions}/>:null}
             <div className="head">
                 <div className="user">
                     <img src={data.user.image} />
                     <p>{data.user.username}</p>
                 </div>
-                <button>•••</button>
+                <button onClick={()=>{setOptions(true)}}>•••</button>
             </div>
 
             <div className="images">
