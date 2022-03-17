@@ -8,6 +8,8 @@ import Home from './pages/home'
 import Login from './pages/login';
 import Profile from './pages/profile';
 import Edit from './pages/edit';
+import Inbox from './pages/inbox';
+
 
 ReactDOM.render(
   <BrowserRouter>
@@ -17,6 +19,7 @@ ReactDOM.render(
       <Route path="/:username" element={<Profile/>}/>
       <Route path="/:username/saved" element={<div>guardados</div>}/>
       <Route path="/edit" element={<Edit/>}/>
+      <Route path="/inbox" element={<Inbox/>}/>
     </Routes>
   </BrowserRouter>,
   document.getElementById('root')

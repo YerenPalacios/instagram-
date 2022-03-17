@@ -107,7 +107,7 @@ export default function Header(){
             </div>
             <div className="icons">
                 <Link to="/">{ico.home}</Link>
-                <button>{ico.share}</button>
+                <Link to="/inbox">{ico.share}</Link>
                 <button onClick={()=>setShowNewPostDiv(true)}>{ico.add}</button>
                 <button>{ico.find}</button>
                 <button>{ico.like_svg}</button>
