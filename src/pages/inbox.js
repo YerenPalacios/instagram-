@@ -1,8 +1,8 @@
 import {useState, useEffect} from 'react'
 import Header from '../components/haeader/header'
 import './pages.css'
-import useFetch from 'use-http'
 import Error from '../components/errors/error'
+import ChatContainer from '../components/chatContainer/chatContainer'
 
 
 export default function Inbox(){
@@ -12,8 +12,7 @@ export default function Inbox(){
         <div>
             {error?<Error error={error}/>:null}
             <Header/>
-            
-            
+            <ChatContainer/>
         </div>
        
     )
