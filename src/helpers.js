@@ -29,11 +29,12 @@ export function UpdateUserSesion(user) {
 }
 
 
-export function useFetch(url=null, options) {
+export function useFetch(url=null,options = null, repeat = false) {
     const navigate = useNavigate()
     const [data, setResponse] = useState(null);
     const [error, setError] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
+    const [repeating, setRepeating] = useState(false)
 
     const defaultOptions = {
         method: 'GET',
@@ -44,25 +45,31 @@ export function useFetch(url=null, options) {
 
     if (!options) options = defaultOptions;
 
-    useEffect(() => {
-        const fetchData = async () => {
-            if (url){
-                setIsLoading(true);
-                try {
-                    const res = await fetch(api.url+url, options);
-                    if (!res.ok) throw(res)
-                    const json = await res.json();
-                    setResponse(json);
-                    setIsLoading(false);
-                } catch (error) { 
-                    setIsLoading(false)  
-                    setError(error);
-                }
+    const fetchData = async () => {
+        if (url){
+            setIsLoading(true);
+            try {
+                const res = await fetch(api.url+url, options);
+                if (!res.ok) throw(res)
+                const json = await res.json();
+                setResponse(json);
+                setIsLoading(false);
+            } catch (error) { 
+                setIsLoading(false)  
+                setError(error);
             }
-        };
+        }
+    };
+
+    if (repeat) setTimeout(() => {
+        setRepeating(!repeating)
+    }, 1000);
+
+    useEffect(() => {
+        
         fetchData();
        
-    }, []); 
+    }, [url, repeating]); 
 
     // try one day...
     async function post(body){
