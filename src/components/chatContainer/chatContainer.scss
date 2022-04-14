@@ -1,5 +1,49 @@
-.chat-container{
-    height: calc(100vh - 60px)
+$border: 1px solid #ccc;
+
+.chat-container {
+    padding: 10px;
+    box-sizing: border-box;
+    height: calc(100vh - 58px);
+    display: grid;
+    max-width: 935px;
+    margin: 0 auto;
+
+    .chat {
+        background-color: #fff;
+        display: flex;
+        border: $border;
+        overflow: hidden;
+        border-radius: 5px;
+
+        .person{
+            display:flex;
+            align-items: center;
+            color:#262626;
+            font-size: 14px;
+            padding:10px;
+            cursor:pointer;
+
+            &:hover{
+                background-color: #f7f7f7;
+            }
+
+            p{
+                margin: 5px 0;
+            }
+            p:last-child{
+                color:#8e8e8e
+            }
+            img{
+                width:52px;
+                border-radius: 50%;
+                border:1px solid #ccc;
+                margin-right: 15px;
+            }
+        }
+    }
 }
 
-*{box-sizing: border-box;}
+
+* {
+    box-sizing: border-box;
+}
