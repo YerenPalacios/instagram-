@@ -20,17 +20,16 @@ export default function ChatContainer(){
                 <div style={{width:300}}>
                     {users.map((i,k)=>(
                         <div key={k} className="person" onClick={()=>setActualChat(i)}>
-                            <img src={api.url+i.image} alt="" />
+                            <img src={api.url+i.user.image} alt="" />
                             <div>
-                                <p>{i.name}</p>
-                                <p>{i.last_message.text} . {moment(i.last_message.created_at).from()}</p>
+                                <p>{i.user.name}</p>
+                                <p>{i.last_message.content} . {moment(i.last_message.timestamp).from()}</p>
                             </div>
                         </div>
                     ))}
                 </div>
-                {actualChat&&<ChatBox user={actualChat}/>}
+                {actualChat&&<ChatBox room={actualChat}/>}
             </div>
         </div>
     )
-    
 }
