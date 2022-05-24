@@ -17,6 +17,7 @@ export default function Home(){
     
     useEffect(()=>{
         if (res.data) setPosts(res.data)
+        console.log(res.data)
     },[res])
     
     var posts_list = posts.length? posts.map((post, i) => (

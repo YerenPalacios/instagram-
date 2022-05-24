@@ -14,6 +14,7 @@ function CommentForm({ onComment, setText, text }) {
 
     const handleEnter = (e) => {
         if (e.key === 'Enter'){
+            e.target.value = ''
             onComment()
         }
     }
