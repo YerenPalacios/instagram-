@@ -3,6 +3,7 @@ import './newPost.scss'
 import { useState, useEffect, useRef } from 'react';
 import { getToken, getUserSesion } from '../../helpers';
 import { useNavigate } from 'react-router-dom';
+import {useTranslation} from 'react-i18next'
 import api from './../../api.json'
 import {default as ico} from './../icons'
 import SimpleImageSlider from 'react-simple-image-slider'
@@ -19,6 +20,7 @@ function getBase64(file) {
 
 
 export default function NewPost({hide}){
+    const {t} = useTranslation()
     const [addingMedia, setAddingMedia] = useState(true)
     const [actualMedia, setActualMedia] = useState([])
     const [publishing, setPublishing] = useState(false)
@@ -85,7 +87,7 @@ export default function NewPost({hide}){
             <div onClick={()=>hide(!true)} className="close-item"></div>
             {addingMedia?
                 <div className="new-post">
-                    <h1>Crea una nueva publicación</h1>  
+                    <h1>{t('Create a new post')}</h1>  
                     <div>
                         <img src={icon} alt="add photo" />
                         <p>Arrastra las fotos y los videos aquí</p>
