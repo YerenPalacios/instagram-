@@ -1,13 +1,29 @@
 import { useEffect, useState } from "react"
 import {useParams} from 'react-router-dom'
 import {Link} from 'react-router-dom'
+import {getUserSesion} from '../../helpers'
 
 import api from '../../api.json'
-import './profilesView.css'
+import './profilesView.scss'
+
+function ProfileBody(){
+    const [actualTab, setActualTab] = useState(1)
+
+    return(
+        <div className="profile-body">
+            <ul className="tablist">
+                <li>Publicaciones</li>
+                <li>Guardado</li>
+                <li>Etiquetadas</li>
+            </ul>
+
+        </div>
+    )
+}
 
 export default function ProfilesView(){
     const {username} = useParams()
-    const isSesionUser = false
+    const [isSesionUser, setIsSesionUser] = useState(false)
     const [user, setUser] = useState({})
     const [notFound, setNotFound] = useState(false)
 
@@ -18,7 +34,9 @@ export default function ProfilesView(){
             if(data.detail){
                 setNotFound(true)
             } else {
-               setUser(data) 
+               setUser(data)
+               console.log(data)
+               setIsSesionUser(getUserSesion().user.id === data.id)
             }
             
         })
@@ -34,36 +52,39 @@ export default function ProfilesView(){
         )
     }
     return(
-        <div className="profilesView">
-            <div className="user-image">
-                <img src={user.image} alt="" />
-            </div>
-            <div className="profile-data">
-                <div className="profile-name">
-                    <h1>{user.username}</h1>
-                    {isSesionUser?
-                        <>
-                            <button>Editar perfil</button>
-                            <div>o</div>
-                        </>:
-                        <>
-                            <button>Enviar mensaje</button>
-                            <button>follow</button>
-                            <button>A</button>
-                            <div>...</div>
-                        </>
-                    }
+        <div>
+            <div className="profilesView">
+                <div className="user-image">
+                    <img src={user.image} alt="" />
                 </div>
-                <p className="profile-nums">
-                    <span><b>0</b> publicaciones</span>
-                    <span><b>0</b> seguidores</span>
-                    <span><b>0</b> seguidos</span>
-                </p>
-                <p className="name"><b>{user.name}</b></p>
-                <p className="desc">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas qui officia rerum quis eligendi perspiciatis, nemo maxime eveniet eum consequuntur nulla cumque recusandae amet deserunt accusantium, odio quasi rem sed?
-                </p>
+                <div className="profile-data">
+                    <div className="profile-name">
+                        <h1>{user.username}</h1>
+                        {isSesionUser?
+                            <>
+                                <button>Editar perfil</button>
+                                <div>o</div>
+                            </>:
+                            <>
+                                <button>Enviar mensaje</button>
+                                <button>follow</button>
+                                <button>A</button>
+                                <div>...</div>
+                            </>
+                        }
+                    </div>
+                    <p className="profile-nums">
+                        <span><b>{user.posts_count}</b> publicaciones</span>
+                        <span><b>0</b> seguidores</span>
+                        <span><b>0</b> seguidos</span>
+                    </p>
+                    <p className="name"><b>{user.name}</b></p>
+                    <p className="desc">
+                        {user.description}
+                    </p>
+                </div>
             </div>
+            <ProfileBody/>
         </div>
     )
 }
