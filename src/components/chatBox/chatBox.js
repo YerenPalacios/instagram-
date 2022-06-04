@@ -76,7 +76,7 @@ export default function ChatBox({ room }) {
     const items_div = document.getElementById('items')
 
     useEffect(() => {
-        let ws = new WebSocket('ws://localhost:3001/ws/chat2/')
+        let ws = new WebSocket(api.socket+'ws/chat2/')
         setWs(ws)
         document.cookie = "Authorization=" + getToken();
         document.cookie = "chat-id=" + room.id;
