@@ -29,10 +29,12 @@ $border: 1px solid #ccc;
 
             p{
                 margin: 5px 0;
-            }
-            p:last-child{
                 color:#8e8e8e
             }
+            p:first-child{
+                color:inherit
+            }
+            
             img{
                 width:52px;
                 border-radius: 50%;

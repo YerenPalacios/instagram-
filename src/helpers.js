@@ -2,10 +2,17 @@ import api from './api.json'
 import {useState, useEffect} from 'react'
 import { useNavigate } from 'react-router-dom'
 
+const getUser = ()=>{
+    let auth = localStorage.getItem('auth')
+    if (auth) {
+        let user = JSON.parse(auth)
+        return user
+    }
+}
 
 export const getToken = () => {
-    let user = JSON.parse(localStorage.getItem('auth'))
-    return 'Token ' + user.token
+    const user = getUser()
+    return user && 'Token ' + user.token
 }
 
 export const getUserSesion = () => {
@@ -36,16 +43,19 @@ export function useFetch(url=null,options = null, repeat = false) {
     const [isLoading, setIsLoading] = useState(false);
     const [repeating, setRepeating] = useState(false)
 
-    const defaultOptions = {
-        method: 'GET',
-        headers:{
-            'Authorization':getToken()
-        },
-    }
-
-    if (!options) options = defaultOptions;
-
     const fetchData = async () => {
+        const token = getToken()
+
+        if (!token) navigate('/login')
+
+        const defaultOptions = {
+            method: 'GET',
+            headers:{
+                'Authorization':token
+            },
+        }
+        if (!options) options = defaultOptions;
+
         if (url){
             setIsLoading(true);
             try {

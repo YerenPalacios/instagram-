@@ -4,26 +4,37 @@ import {useFetch} from '../../helpers'
 import './chatContainer.scss';
 import api from '../../api.json'
 import moment from 'moment'
+import testImg from '../../p.png'
+import { useNavigate, useParams } from 'react-router-dom';
 
 export default function ChatContainer(){
+    const {username} = useParams()
+    const navigate = useNavigate()
     const res = useFetch('chatlist/')
     const [users,setUsers] = useState([])
     const [actualChat, setActualChat] = useState(null)
 
     useEffect(() => {
         if (res.data) setUsers(res.data)
+        if (username){
+            setActualChat(users.find((i) => (i.user.username===username&&i)))
+        }
     }, [res])
+
+    const openChat = (room)=>{
+        navigate('/inbox/'+room.user.username)
+    }
 
     return(
         <div className="chat-container">
             <div className="chat">
                 <div style={{width:300}}>
                     {users.map((i,k)=>(
-                        <div key={k} className="person" onClick={()=>setActualChat(i)}>
-                            <img src={api.url+i.user.image} alt="" />
+                        <div key={k} className="person" onClick={()=>openChat(i)}>
+                            <img src={i.user.image? api.url+i.user.image : testImg} alt="" />
                             <div>
                                 <p>{i.user.name}</p>
-                                <p>{i.last_message.content} . {moment(i.last_message.timestamp).from()}</p>
+                                {i.last_message.content&&<p>{i.last_message.content} . {moment(i.last_message.timestamp).from()}</p>}
                             </div>
                         </div>
                     ))}

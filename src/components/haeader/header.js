@@ -6,6 +6,7 @@ import gif from './ZKZg.gif'
 import api from '../../api.json'
 import { getUserSesion } from '../../helpers';
 import NewPost from '../newPost/newPost';
+import testImg from '../../p.png'
 
 //todo: finish this search
 
@@ -70,7 +71,7 @@ function UserMenu({icon, username}){
     return(
         <div className="user-menu" ref={ref}>
             <div className="user-icon">
-                <img src={api.url+icon} alt="" />
+                <img src={icon? api.url+icon: testImg} alt="" />
             </div>
             {isVisible && (
                 <div className="menu">
@@ -99,7 +100,7 @@ export default function Header(){
 
     return(
         <header>
-            <img src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png" alt="" className="logo" />
+            {/* <img src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png" alt="" className="logo" /> */}
             <div className="search">
                 <input onBlur={handleFocus} onFocus={handleFocus} type="search" size="30" placeholder="Buscar"/>
 
