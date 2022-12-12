@@ -16,10 +16,10 @@ function RegForm({change}){
             <p className="desc">Regístrate para ver fotos y videos de tus amigos.</p>
             <div className="inputs">
                 <input type="text" placeholder="Número de celular o correo electrónico"/>
-                <input type="text" placeholder="Nombre completo"/>
+                <input type="text" placeholder="Correo electronico"/>
                 <input type="text" placeholder="Nombre de usuairio"/>
                 <input type="text" placeholder="Contraseña"/>
-                <button>Iniciar sesión</button>
+                <button>Registrarse</button>
             </div>
         </div>
         <div className="block">

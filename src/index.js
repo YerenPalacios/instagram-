@@ -9,6 +9,7 @@ import Login from './pages/login';
 import Profile from './pages/profile';
 import Edit from './pages/edit';
 import Inbox from './pages/inbox';
+import View404 from './pages/404';
 
 import {initReactI18next} from 'react-i18next'
 import LanguageDetector from 'i18next-browser-languagedetector';
@@ -37,12 +38,15 @@ i18n
 ReactDOM.render(
   <BrowserRouter>
     <Routes>
-      <Route path="/login" element={<Login />} />
-      <Route path="/" element={<Home />} />
-      <Route path="/:username" element={<Profile />} />
-      <Route path="/:username/saved" element={<div>guardados</div>} />
-      <Route path="/edit" element={<Edit />} />
-      <Route path="/inbox" element={<Inbox />} />
+      <Route path="/login" element={<Login/>}/>
+      <Route path="/" element={<Home/>}/>
+      <Route path="/:username" element={<Profile/>}/>
+      <Route path="/:username/saved" element={<div>guardados</div>}/>
+      <Route path="/edit" element={<Edit/>}/>
+      <Route path="/inbox" element={<Inbox/>}/>
+      <Route path="/inbox/:username" element={<Inbox/>}/>
+      <Route path="/accounts" element={<Inbox/>}/>
+      <Route path="*" element={<View404/>}/>
     </Routes>
   </BrowserRouter>,
   document.getElementById('root')

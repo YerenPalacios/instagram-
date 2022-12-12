@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react"
-import {useParams} from 'react-router-dom'
+import {useNavigate, useParams} from 'react-router-dom'
 import {Link} from 'react-router-dom'
-import {getUserSesion} from '../../helpers'
+import {getUserSesion, useFetch} from '../../helpers'
+import testImg from '../../p.png'
 
 import api from '../../api.json'
 import './profilesView.scss'
@@ -26,6 +27,8 @@ export default function ProfilesView(){
     const [isSesionUser, setIsSesionUser] = useState(false)
     const [user, setUser] = useState({})
     const [notFound, setNotFound] = useState(false)
+    const {post, error} = useFetch('chatlist/')
+    const navigate = useNavigate()
 
     useEffect(()=>{
         fetch(api.url+'user/'+username)
@@ -35,7 +38,6 @@ export default function ProfilesView(){
                 setNotFound(true)
             } else {
                setUser(data)
-               console.log(data)
                setIsSesionUser(getUserSesion().user.id === data.id)
             }
             
@@ -51,22 +53,28 @@ export default function ProfilesView(){
             </div>
         )
     }
+
+    const createMessaje = ()=>{
+        post({"username": username})
+        !error && navigate('/inbox/'+username)
+    }
+
     return(
         <div>
             <div className="profilesView">
                 <div className="user-image">
-                    <img src={user.image} alt="" />
+                    <img src={user.image || testImg} alt="" />
                 </div>
                 <div className="profile-data">
                     <div className="profile-name">
                         <h1>{user.username}</h1>
                         {isSesionUser?
                             <>
-                                <button>Editar perfil</button>
+                                <Link to="/edit">Editar Perfil</Link>
                                 <div>o</div>
                             </>:
                             <>
-                                <button>Enviar mensaje</button>
+                                <button onClick={createMessaje}>Enviar mensaje</button>
                                 <button>follow</button>
                                 <button>A</button>
                                 <div>...</div>

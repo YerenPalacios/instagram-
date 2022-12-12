@@ -6,6 +6,8 @@ import { getToken } from '../../helpers'
 import { useState, useEffect} from 'react';
 import api from '../../api.json'
 
+import testImg from '../../p.png'
+
 const connectionStates = [
     'Connecting',
     'Open',
@@ -14,61 +16,6 @@ const connectionStates = [
     'Uninstantiated',
 ];
 
-// export const WebSocketDemo = ({ user }) => {
-//     //Public API that will echo messages sent to it back to the client
-//     const [socketUrl, setSocketUrl] = useState('ws://localhost:3001/ws/chat2/');
-//     const [messageHistory, setMessageHistory] = useState([]);
-//     document.cookie = `Authorization=${getToken()};`
-//     const { sendMessage, lastMessage, readyState, getWebSocket } = useWebSocket(socketUrl);
-
-//     useEffect(() => {
-//         if (lastMessage !== null) {
-//             setMessageHistory((prev) => prev.concat(lastMessage));
-//         }
-//     }, [lastMessage, setMessageHistory]);
-
-
-//     const getMessages = () => {
-//         handleClickSendMessage({
-//             'action': 'get_messages',
-//             'send_to': user
-//         })
-//     }
-//     useEffect(getMessages, [])
-
-//     const handleClickChangeSocketUrl = useCallback(
-//         () => setSocketUrl('wss://demos.kaazing.com/echo'),
-//         []
-//     );
-
-//     const handleClickSendMessage = useCallback((m) => {
-//         sendMessage(JSON.stringify(m)
-//         )
-//     }, []);
-
-    
-
-//     return (
-//         <div>
-//             <button onClick={handleClickChangeSocketUrl}>
-//                 Click Me to change Socket Url
-//             </button>
-//             <button
-//                 onClick={() => handleClickSendMessage({ 'action': 'add_mesage', 'message': 'ya' })}
-//                 disabled={readyState !== ReadyState.OPEN}
-//             >
-//                 Click Me to send 'Hello'
-//             </button>
-//             {lastMessage ? <span>Last message: {lastMessage.data}</span> : null}
-//             <ul>
-//                 {messageHistory.map((message, idx) => (
-//                     <span key={idx}>{message ? message.data : null}</span>
-//                 ))}
-//             </ul>
-//         </div>
-//     );
-// };
-
 export default function ChatBox({ room }) {
     const [ws, setWs] = useState()
     const [connectionStatus, setConnectionStatus] = useState(3)
@@ -76,7 +23,7 @@ export default function ChatBox({ room }) {
     const items_div = document.getElementById('items')
 
     useEffect(() => {
-        let ws = new WebSocket(api.socket+'ws/chat2/')
+        let ws = new WebSocket(api.ws + 'chat2/?'+'room_id='+room.id)
         setWs(ws)
         document.cookie = "Authorization=" + getToken();
         document.cookie = "chat-id=" + room.id;
@@ -87,10 +34,6 @@ export default function ChatBox({ room }) {
     useEffect(()=>{
         items_div && items_div.scrollTo(0, items_div.scrollHeight)
     },[messages])
-
-    useEffect(()=>{
-        ws && console.log(ws)
-    },[ws])
     
     if (ws){
         ws.onopen = (e) => {
@@ -126,7 +69,7 @@ export default function ChatBox({ room }) {
         <div className="chatBox">
             <div className="head">
                 <div className="user">
-                    <img src={api.url + room.user.image} alt="i" />
+                    <img src={room.user.image? api.url + room.user.image: testImg} alt="i" />
                     <p>{room.user.name} Stataus: {connectionStates[connectionStatus]}</p>
                 </div>
                 <button><img src={infoIcon} alt="i" /></button>
