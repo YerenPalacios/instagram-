@@ -1,8 +1,10 @@
 import api from './api.json'
-import {useState, useEffect} from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useContext } from 'react'
+import { AuthContext } from './context/datacontext'
 
-const getUser = ()=>{
+const getUser = () => {
     let auth = localStorage.getItem('auth')
     if (auth) {
         let user = JSON.parse(auth)
@@ -36,36 +38,40 @@ export function UpdateUserSesion(user) {
 }
 
 
-export function useFetch(url=null,options = null, repeat = false) {
+export function useFetch(path = null, options = null, repeat = false) {
     const navigate = useNavigate()
     const [data, setResponse] = useState(null);
     const [error, setError] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [repeating, setRepeating] = useState(false)
+    const { auth } = useContext(AuthContext)
 
-    const fetchData = async () => {
-        const token = getToken()
-
-        if (!token) navigate('/login')
+    const fetchData = () => {
+        if (!auth) navigate('/login')
 
         const defaultOptions = {
             method: 'GET',
-            headers:{
-                'Authorization':token
+            headers: {
+                'Authorization': 'Token ' + auth.token
             },
         }
         if (!options) options = defaultOptions;
 
-        if (url){
+        if (path) {
             setIsLoading(true);
+            let url = api.url + path
             try {
-                const res = await fetch(api.url+url, options);
-                if (!res.ok) throw(res)
-                const json = await res.json();
-                setResponse(json);
+                
+                fetch(url, options).then((res)=>{
+                    if (!res.ok) throw (res)
+                    return res.json()
+                }).then((data)=>{
+                    setResponse(data)
+                });
                 setIsLoading(false);
-            } catch (error) { 
-                setIsLoading(false)  
+            } catch (error) {
+                debugger
+                setIsLoading(false)
                 setError(error);
             }
         }
@@ -76,14 +82,13 @@ export function useFetch(url=null,options = null, repeat = false) {
     }, 1000);
 
     useEffect(() => {
-        
         fetchData();
-       
-    }, [url, repeating]); 
+
+    }, [path, repeating]);
 
     // try one day...
-    async function post(body){
-        options = { 
+    async function post(body) {
+        options = {
             method: 'POST',
             headers: {
                 'Authorization': getToken(),
@@ -94,17 +99,17 @@ export function useFetch(url=null,options = null, repeat = false) {
         setIsLoading(true);
         try {
             options.method = 'POST'
-            const res = await fetch(api.url+url, options);
-            if (!res.ok) throw(res)
+            const res = await fetch(api.url + path, options);
+            if (!res.ok) throw (res)
             const json = await res.json();
             setResponse(json);
             setIsLoading(false);
-        } catch (error) { 
-            setIsLoading(false)  
+        } catch (error) {
+            setIsLoading(false)
             setError(error);
         }
     }
 
-    if(error) if(error.status == 401) navigate('/login')
-    return {post, data, error, isLoading };
+    if (error) if (error.status == 401) navigate('/login')
+    return { post, data, error, isLoading };
 }

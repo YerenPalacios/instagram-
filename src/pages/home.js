@@ -5,10 +5,13 @@ import StoriesBar from '../components/storiesBar/storiesBar'
 import './pages.css'
 import {useFetch} from '../helpers'
 import Error from '../components/errors/error'
+import { useContext } from 'react'
+import { AuthContext } from '../context/datacontext'
 
 
 export default function Home(){
     const [posts, setPosts] = useState([])
+    const {auth} = useContext(AuthContext)
 
     const res = useFetch('post/')
     const error = res.error

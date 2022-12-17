@@ -1,7 +1,7 @@
 export const LocalStorage = {
-    get(key) {
+    get(key) {   
         let item = localStorage.getItem(key)
-        if (item) JSON.parse(item)
+        if (item) return JSON.parse(item)
     },
     set(key, value) {
         value = JSON.stringify(value)
