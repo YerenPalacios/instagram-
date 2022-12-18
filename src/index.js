@@ -14,7 +14,8 @@ import View404 from './pages/404';
 import { initReactI18next } from 'react-i18next'
 import LanguageDetector from 'i18next-browser-languagedetector';
 import i18n from 'i18next'
-import { AuthProvider } from './context/datacontext';
+import { ApiErrorProvider, AuthProvider } from './context/datacontext';
+import { APIErrorModal } from './components/ApiErrorModal/ApiErrorModal';
 
 i18n
   .use(initReactI18next) // passes i18n down to react-i18next
@@ -40,17 +41,20 @@ ReactDOM.render(
 
   <BrowserRouter>
     <AuthProvider>
-      <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/" element={<Home />} />
-        <Route path="/:username" element={<Profile />} />
-        <Route path="/:username/saved" element={<div>guardados</div>} />
-        <Route path="/edit" element={<Edit />} />
-        <Route path="/inbox" element={<Inbox />} />
-        <Route path="/inbox/:username" element={<Inbox />} />
-        <Route path="/accounts" element={<Inbox />} />
-        <Route path="*" element={<View404 />} />
-      </Routes>
+      <ApiErrorProvider>
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route path="/" element={<Home />} />
+          <Route path="/:username" element={<Profile />} />
+          <Route path="/:username/saved" element={<div>guardados</div>} />
+          <Route path="/edit" element={<Edit />} />
+          <Route path="/inbox" element={<Inbox />} />
+          <Route path="/inbox/:username" element={<Inbox />} />
+          <Route path="/accounts" element={<Inbox />} />
+          <Route path="*" element={<View404 />} />
+        </Routes>
+        <APIErrorModal></APIErrorModal>
+      </ApiErrorProvider>
     </AuthProvider>
   </BrowserRouter>
   ,

@@ -1,19 +1,19 @@
-import {useState, useEffect} from 'react'
+import { useState } from 'react'
 import Header from '../components/haeader/header'
 import './pages.css'
 import Error from '../components/errors/error'
 import ChatContainer from '../components/chatContainer/chatContainer'
 
 
-export default function Inbox(){
+export default function Inbox() {
     const [error, setError] = useState(false)
 
-    return(
+    return (
         <div>
-            {error?<Error error={error}/>:null}
-            <Header/>
-            <ChatContainer/>
+            {error ? <Error error={error} /> : null}
+            <Header />
+            <ChatContainer />
         </div>
-       
+
     )
 }

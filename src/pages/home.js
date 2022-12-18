@@ -1,40 +1,34 @@
-import {useState, useEffect} from 'react'
+import { useState, useEffect } from 'react'
 import Post from '../components/Post/post'
 import Header from '../components/haeader/header'
 import StoriesBar from '../components/storiesBar/storiesBar'
 import './pages.css'
-import {useFetch} from '../helpers'
+import { useFetch } from '../helpers'
 import Error from '../components/errors/error'
-import { useContext } from 'react'
-import { AuthContext } from '../context/datacontext'
 
-
-export default function Home(){
+export default function Home() {
     const [posts, setPosts] = useState([])
-    const {auth} = useContext(AuthContext)
 
     const res = useFetch('post/')
     const error = res.error
-    
-    useEffect(()=>{
+
+    useEffect(() => {
         if (res.data) setPosts(res.data)
-    },[res])
-    
+    }, [res])
+
     var posts_list = posts.length && posts.map((post, i) => (
-        <Post key={i} data={post}/>
+        <Post key={i} data={post} />
     ))
-    
-    return(
+
+    return (
         <div>
-            {error?<Error error={error}/>:null}            
-            <Header/>
+            {error ? <Error error={error} /> : null}
+            <Header />
             <div className="container">
-                <StoriesBar/>
-                {res.isLoading?<p>cargando...</p>:null}
-                {posts_list} 
+                <StoriesBar />
+                {res.isLoading ? <p>cargando...</p> : null}
+                {posts_list}
             </div>
-            
         </div>
-       
     )
 }
