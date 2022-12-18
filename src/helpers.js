@@ -2,7 +2,7 @@ import api from './api.json'
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useContext } from 'react'
-import { AuthContext } from './context/datacontext'
+import { ApiErrorContext, AuthContext } from './context/datacontext'
 
 const getUser = () => {
     let auth = localStorage.getItem('auth')
@@ -47,7 +47,10 @@ export function useFetch(path = null, options = null, repeat = false) {
     const { auth } = useContext(AuthContext)
 
     const fetchData = () => {
-        if (!auth) navigate('/login')
+        if (!auth) {
+            navigate('/login')
+            return
+        }
 
         const defaultOptions = {
             method: 'GET',
@@ -61,11 +64,11 @@ export function useFetch(path = null, options = null, repeat = false) {
             setIsLoading(true);
             let url = api.url + path
             try {
-                
-                fetch(url, options).then((res)=>{
+
+                fetch(url, options).then((res) => {
                     if (!res.ok) throw (res)
                     return res.json()
-                }).then((data)=>{
+                }).then((data) => {
                     setResponse(data)
                 });
                 setIsLoading(false);
@@ -91,7 +94,7 @@ export function useFetch(path = null, options = null, repeat = false) {
         options = {
             method: 'POST',
             headers: {
-                'Authorization': getToken(),
+                'Authorization': 'Token ' + auth.token,
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(body),
@@ -110,6 +113,81 @@ export function useFetch(path = null, options = null, repeat = false) {
         }
     }
 
-    if (error) if (error.status == 401) navigate('/login')
+    if (error) if (error.status === 401) navigate('/login')
     return { post, data, error, isLoading };
+}
+
+
+export const useFetchv2 = () => {
+    const [data, setResponse] = useState(null);
+    const [loading, setLoading] = useState(false);
+    const { auth } = useContext(AuthContext)
+    const { error, setError } = useContext(ApiErrorContext)
+
+    /**
+     * @param {string} path
+     * @param {object} options
+     */
+    const runFetch = (path, options = {}) => {
+        return fetch(
+            api.url + path, options
+        ).then((res) => {
+            if (!res.ok) throw setError('Ha ocurrido un error')
+            return res.json()
+        }).finally(() => setLoading(false))
+    }
+
+    /**
+     * @param {string} path
+     */
+    const get = (path) => {
+        setLoading(true);
+        const options = {
+            method: 'GET',
+            headers: {
+                'Authorization': 'Token ' + auth.token
+            }
+        }
+        runFetch(path, options)
+    }
+
+    /**
+     * @param {string} path
+     * @param {number?} body
+     * @return {Promise}
+     */
+    const post = (path, body = {}) => {
+        setLoading(true);
+        const options = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Token ' + auth.token,
+            },
+            body: JSON.stringify(body)
+        }
+
+        return runFetch(path, options)
+    }
+
+    /**
+     * @param {string} path
+     * @param {number?} body
+     * @return {Promise}
+     */
+    const remove = (path, body = {}) => {
+        setLoading(true);
+        const options = {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Token ' + auth.token,
+            },
+            body: JSON.stringify(body)
+        }
+
+        return runFetch(path, options)
+    }
+
+    return { get, post, remove, data, error, loading, setLoading };
 }
