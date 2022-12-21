@@ -1,12 +1,12 @@
 export const LocalStorage = {
-    get(key) {   
+    get(key) {
         let item = localStorage.getItem(key)
-        if (item) return JSON.parse(item)
+        if (item && item !== 'undefined') return JSON.parse(item)
     },
     set(key, value) {
         value = JSON.stringify(value)
         localStorage.setItem(key, value)
     },
-    remove(key) {localStorage.removeItem(key)},
-    clear() {localStorage.clear()},
-  }
+    remove(key) { localStorage.removeItem(key) },
+    clear() { localStorage.clear() },
+}

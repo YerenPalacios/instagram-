@@ -1,8 +1,11 @@
+import './ApiErrorModal.scss'
+
 import { useEffect } from 'react';
 import { useContext } from 'react';
 import { ApiErrorContext } from '../../context/datacontext';
 
 export function APIErrorModal() {
+  const modalDuration = 5
   const errorContext = useContext(ApiErrorContext)
 
   useEffect(() => {
@@ -10,10 +13,10 @@ export function APIErrorModal() {
       setTimeout(() => {
         console.log('ooo')
         errorContext.setError(null)
-      }, 4000);
+      }, modalDuration * 1000);
   }, [errorContext])
 
   return (
-    errorContext.error ? <div className='Error'>{errorContext.error}</div> : null
+    errorContext.error ? <div style={{ animationDuration: modalDuration + 's' }} className='ApiErrorModal'>{errorContext.error}</div> : null
   )
 }
