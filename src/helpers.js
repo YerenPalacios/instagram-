@@ -1,5 +1,5 @@
 import api from './api.json'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useContext } from 'react'
 import { ApiErrorContext, AuthContext } from './context/datacontext'
@@ -37,91 +37,10 @@ export function UpdateUserSesion(user) {
     return false
 }
 
-
-export function useFetch(path = null, options = null, repeat = false) {
-    const navigate = useNavigate()
-    const [data, setResponse] = useState(null);
-    const [error, setError] = useState(null);
-    const [isLoading, setIsLoading] = useState(false);
-    const [repeating, setRepeating] = useState(false)
-    const { auth } = useContext(AuthContext)
-
-    const fetchData = () => {
-        if (!auth) {
-            navigate('/login')
-            return
-        }
-
-        const defaultOptions = {
-            method: 'GET',
-            headers: {
-                'Authorization': 'Token ' + auth.token
-            },
-        }
-        if (!options) options = defaultOptions;
-
-        if (path) {
-            setIsLoading(true);
-            let url = api.url + path
-            try {
-
-                fetch(url, options).then((res) => {
-                    if (!res.ok) throw (res)
-                    return res.json()
-                }).then((data) => {
-                    setResponse(data)
-                });
-                setIsLoading(false);
-            } catch (error) {
-                debugger
-                setIsLoading(false)
-                setError(error);
-            }
-        }
-    };
-
-    if (repeat) setTimeout(() => {
-        setRepeating(!repeating)
-    }, 1000);
-
-    useEffect(() => {
-        fetchData();
-
-    }, [path, repeating]);
-
-    // try one day...
-    async function post(body) {
-        options = {
-            method: 'POST',
-            headers: {
-                'Authorization': 'Token ' + auth.token,
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(body),
-        }
-        setIsLoading(true);
-        try {
-            options.method = 'POST'
-            const res = await fetch(api.url + path, options);
-            if (!res.ok) throw (res)
-            const json = await res.json();
-            setResponse(json);
-            setIsLoading(false);
-        } catch (error) {
-            setIsLoading(false)
-            setError(error);
-        }
-    }
-
-    if (error) if (error.status === 401) navigate('/login')
-    return { post, data, error, isLoading };
-}
-
 const LOGIN_PATH = 'login/'
 
-export const useFetchv2 = () => {
+export const useFetch = () => {
     const navigate = useNavigate()
-    const [data, setResponse] = useState(null);
     const [loading, setLoading] = useState(false);
     const { auth } = useContext(AuthContext)
     const { error, setError } = useContext(ApiErrorContext)
@@ -136,12 +55,15 @@ export const useFetchv2 = () => {
 
         return fetch(
             api.url + path, options
-        ).then((res) => {
+        ).then(res => {
             if (res.status >= 500) throw setError('Ha ocurrido un error')
-            return res.json()
-        }).catch(e => {
-            setError(e.toString())
-        }
+            if (res.status >= 400) 
+                // TODO: think how to use 400 errors
+                throw res.json().then((data=>{
+                    setError(JSON.stringify(data))
+                }))
+            else return res.json()
+        }).catch(e => {throw setError(e.toString())}
         ).finally(() => setLoading(false))
     }
 
@@ -157,7 +79,7 @@ export const useFetchv2 = () => {
 
         return runFetch(LOGIN_PATH, options)
     }
-
+    
     const get = (path) => {
         setLoading(true);
         const options = {
@@ -166,7 +88,7 @@ export const useFetchv2 = () => {
                 'Authorization': 'Token ' + auth.token
             }
         }
-        runFetch(path, options)
+        return runFetch(path, options)
     }
 
     const post = (path, body = {}) => {
@@ -197,5 +119,5 @@ export const useFetchv2 = () => {
         return runFetch(path, options)
     }
 
-    return { get, post, remove, login, data, error, loading, setLoading };
+    return { get, post, remove, login, error, loading, setLoading };
 }

@@ -1,86 +1,92 @@
-.profilesView{
+.profilesView {
     display: grid;
     grid-template-columns: 40% auto;
-    align-items:flex-start;
+    align-items: flex-start;
     color: hsl(0, 0%, 15%);
+
+    .user-image {
+        width: 140px;
+        height: 140px;
+        border-radius: 50%;
+        overflow: hidden;
+        margin: 0 23%;
+        border: 4px solid #fff;
+        box-shadow: 0 0 2px 1px #ccc;
+        display: grid;
+        place-items: center;
+    }
+
+    img {
+        width: 100%;
+        display: flex;
+    }
 }
 
-
-.profilesView .user-image{
-    border-radius: 50%;
-    overflow: hidden;
-    margin: 0 23%;
-    border: 4px solid #fff;
-    box-shadow: 0 0 2px 1px #ccc;
-}
-
-.profilesView img {
-    width: 100%;
-    display: flex;
-}
-
-.profile-data{
+.profile-data {
     padding-right: 6vw;
+
+    h1 {
+        font-weight: 100;
+        font-size: 28px;
+        color: #262626;
+        margin: 10px 0
+    }
+
+    .profile-name {
+        display: flex;
+        align-items: center;
+        justify-content: space-between
+    }
+
+    .name {
+        margin: 0;
+        margin-bottom: 5px;
+    }
+
+    .desc {
+        margin: 0;
+        font-weight: 100;
+    }
 }
 
-.profile-data h1{
-    font-weight: 100;
-    font-size: 28px;
-    color: #262626;
-    margin:10px 0
-}
 
-.profile-name{
-    display: flex;
-    align-items: center;
-    justify-content: space-between
-}
-.profile-nums{
+.profile-nums {
     display: grid;
     font-weight: 100;
-    grid-template-columns: repeat(3,auto);
-}
-
-.profile-data .name{
-    margin:0;
-    margin-bottom: 5px;
-}
-.profile-data .desc{
-    margin:0;
-    font-weight: 100;
+    grid-template-columns: repeat(3, auto);
 }
 
 
-
-.not-found{
+.not-found {
     text-align: center;
     color: #262626;
     width: 100%;
+
+    h1 {
+        font-size: 22px;
+    }
+
+    p {
+        font-size: 16px;
+    }
 }
 
-.not-found h1{
-    font-size: 22px;
-}
 
-.not-found p{
-    font-size: 16px;
-}
-
-
-.profile-body{
+.profile-body {
     padding: 0 20px;
-    .tablist{
+
+    .tablist {
         display: flex;
         border-top: 1px solid #dbdbdb;
-        list-style:none;
-        justify-content:center;
+        list-style: none;
+        justify-content: center;
         gap: 40px;
         color: #8e8e8e;
-        padding:0;
-        li{
-            padding:18px;
-            cursor:pointer
+        padding: 0;
+
+        li {
+            padding: 18px;
+            cursor: pointer
         }
     }
-    
 }

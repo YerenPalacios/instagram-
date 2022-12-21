@@ -4,31 +4,27 @@ import { Link } from 'react-router-dom'
 import testImg from '../../p.png'
 
 import { useFetch } from '../../helpers'
-import Error from '../errors/error'
 
 export default function StoriesBar() {
     const [profiles, setProfiles] = useState([])
-    const res = useFetch('profile-stories/')
-    const error = res.error
+    const { get, loading } = useFetch()
 
     useEffect(() => {
-        if (res.data) setProfiles(res.data)
-    }, [res])
-
-
-    if (error) return (<Error error={error} />)
+        get('profile-stories/').then(data => {
+            setProfiles(data)
+        })
+    }, [])
 
     if (profiles.length !== 0) {
         return (
             <div className="stories_bar">
-                {res.isLoading ? <p>loading...</p> : null}
+                {loading && <p>loading...</p>}
                 {profiles.map((p, i) => (
                     <div key={i} className="profile">
                         <img src={p.image ? p.image : testImg} alt="" />
                         <p><Link to={"/" + p.username}>{p.username}</Link></p>
                     </div>
                 ))}
-
             </div>
         )
     } else return null

@@ -2,7 +2,7 @@ import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import './loginForm.scss'
 import { AuthContext } from "../../context/datacontext";
-import { useFetchv2 } from "../../helpers";
+import { useFetch } from "../../helpers";
 import { LocalStorage } from "../../services/LocalStorage.service";
 
 function RegForm({ change }) {
@@ -29,7 +29,7 @@ function RegForm({ change }) {
 
 export default function LoginForm() {
     const navigate = useNavigate()
-    const { login } = useFetchv2()
+    const { login } = useFetch()
     const { setAuth } = useContext(AuthContext)
 
     const [form, setForm] = useState('login')
@@ -55,7 +55,7 @@ export default function LoginForm() {
     const handleLogin = (e) => {
         e.preventDefault()
         if (loginData.email.length > 0 && loginData.password.length > 0)
-            login(loginData).then((res) => {
+            login(loginData).then(res => {
                 LocalStorage.set('auth', res)
                 setAuth(res)
                 navigate('/')
