@@ -117,8 +117,10 @@ export function useFetch(path = null, options = null, repeat = false) {
     return { post, data, error, isLoading };
 }
 
+const LOGIN_PATH = 'login/'
 
 export const useFetchv2 = () => {
+    const navigate = useNavigate()
     const [data, setResponse] = useState(null);
     const [loading, setLoading] = useState(false);
     const { auth } = useContext(AuthContext)
@@ -129,17 +131,33 @@ export const useFetchv2 = () => {
      * @param {object} options
      */
     const runFetch = (path, options = {}) => {
+        if (path !== LOGIN_PATH && !auth)
+            return navigate(LOGIN_PATH)
+
         return fetch(
             api.url + path, options
         ).then((res) => {
-            if (!res.ok) throw setError('Ha ocurrido un error')
+            if (res.status >= 500) throw setError('Ha ocurrido un error')
             return res.json()
-        }).finally(() => setLoading(false))
+        }).catch(e => {
+            setError(e.toString())
+        }
+        ).finally(() => setLoading(false))
     }
 
-    /**
-     * @param {string} path
-     */
+    const login = (body) => {
+        setLoading(true);
+        const options = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(body)
+        }
+
+        return runFetch(LOGIN_PATH, options)
+    }
+
     const get = (path) => {
         setLoading(true);
         const options = {
@@ -151,11 +169,6 @@ export const useFetchv2 = () => {
         runFetch(path, options)
     }
 
-    /**
-     * @param {string} path
-     * @param {number?} body
-     * @return {Promise}
-     */
     const post = (path, body = {}) => {
         setLoading(true);
         const options = {
@@ -170,11 +183,6 @@ export const useFetchv2 = () => {
         return runFetch(path, options)
     }
 
-    /**
-     * @param {string} path
-     * @param {number?} body
-     * @return {Promise}
-     */
     const remove = (path, body = {}) => {
         setLoading(true);
         const options = {
@@ -189,5 +197,5 @@ export const useFetchv2 = () => {
         return runFetch(path, options)
     }
 
-    return { get, post, remove, data, error, loading, setLoading };
+    return { get, post, remove, login, data, error, loading, setLoading };
 }

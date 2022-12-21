@@ -1,0 +1,26 @@
+.ApiErrorModal {
+    position: fixed;
+    bottom: 0;
+    background-color: #2b2b2b;
+    color: #ff807c;
+    width: 100%;
+    padding: 5px 10px;
+    animation: error;
+    translate: 1s;
+    transform: translateY(100%);
+}
+
+@keyframes error {
+    0% {
+        transform: translateY(100%);
+    }
+
+    15%,
+    85% {
+        transform: translateY(0%);
+    }
+
+    100% {
+        transform: translateY(100%);
+    }
+}
