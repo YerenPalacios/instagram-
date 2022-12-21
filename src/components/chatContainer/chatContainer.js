@@ -1,45 +1,48 @@
-import { useEffect, useState} from 'react';
+import { useEffect, useState } from 'react';
 import ChatBox from '../chatBox/chatBox';
-import {useFetch} from '../../helpers'
+import { useFetch } from '../../helpers'
 import './chatContainer.scss';
 import api from '../../api.json'
 import moment from 'moment'
 import testImg from '../../p.png'
 import { useNavigate, useParams } from 'react-router-dom';
 
-export default function ChatContainer(){
-    const {username} = useParams()
+export default function ChatContainer() {
+    const { username } = useParams()
     const navigate = useNavigate()
-    const res = useFetch('chatlist/')
-    const [users,setUsers] = useState([])
+    const { get } = useFetch()
+    const [users, setUsers] = useState([])
     const [actualChat, setActualChat] = useState(null)
 
     useEffect(() => {
-        if (res.data) setUsers(res.data)
-        if (username){
-            setActualChat(users.find((i) => (i.user.username===username&&i)))
-        }
-    }, [res])
+        get('chatlist/').then(data => {
+            setUsers(data)
+            username && setActualChat(
+                users.find((i) => (i.user.username === username && i))
+            )
+        })      
+    }, [username])
 
-    const openChat = (room)=>{
-        navigate('/inbox/'+room.user.username)
+    const openChat = (room) => {
+        console.log(room, actualChat)
+        navigate('/inbox/' + room.user.username)
     }
 
-    return(
+    return (
         <div className="chat-container">
             <div className="chat">
-                <div style={{width:300}}>
-                    {users.map((i,k)=>(
-                        <div key={k} className="person" onClick={()=>openChat(i)}>
-                            <img src={i.user.image? api.url+i.user.image : testImg} alt="" />
+                <div style={{ width: 300 }}>
+                    {users.map((i, k) => (
+                        <div key={k} className="person" onClick={() => openChat(i)}>
+                            <img src={i.user.image ? api.url + i.user.image : testImg} alt="" />
                             <div>
                                 <p>{i.user.name}</p>
-                                {i.last_message.content&&<p>{i.last_message.content} . {moment(i.last_message.timestamp).from()}</p>}
+                                {i.last_message.content && <p>{i.last_message.content} . {moment(i.last_message.timestamp).from()}</p>}
                             </div>
                         </div>
                     ))}
                 </div>
-                {actualChat&&<ChatBox room={actualChat}/>}
+                {actualChat && <ChatBox room={actualChat} />}
             </div>
         </div>
     )

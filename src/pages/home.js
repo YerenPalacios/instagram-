@@ -4,30 +4,26 @@ import Header from '../components/haeader/header'
 import StoriesBar from '../components/storiesBar/storiesBar'
 import './pages.css'
 import { useFetch } from '../helpers'
-import Error from '../components/errors/error'
 
 export default function Home() {
     const [posts, setPosts] = useState([])
-
-    const res = useFetch('post/')
-    const error = res.error
+    const { get, loading } = useFetch()
 
     useEffect(() => {
-        if (res.data) setPosts(res.data)
-    }, [res])
-
-    var posts_list = posts.length && posts.map((post, i) => (
-        <Post key={i} data={post} />
-    ))
+        get('post/').then(data =>
+            setPosts(data.map((post, i) => (
+                <Post key={i} data={post} />
+            )))
+        )
+    }, [])
 
     return (
         <div>
-            {error ? <Error error={error} /> : null}
             <Header />
             <div className="container">
                 <StoriesBar />
-                {res.isLoading ? <p>cargando...</p> : null}
-                {posts_list}
+                {loading && <p>cargando...</p>}
+                {posts}
             </div>
         </div>
     )

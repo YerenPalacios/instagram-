@@ -6,8 +6,8 @@ import {ProfileForm, PasswordForm} from "../components/profileForm/profileForm";
 function Menu({actual, click}){
     return(
         <div className="menu">
-            <button onClick={()=>{click(1)}} className={actual===1?'actual':null}>Editar perfil</button>
-            <button onClick={()=>{click(2)}} className={actual===2?'actual':null}>Cambiar contraseña</button>
+            <button onClick={()=>{click(1)}} className={actual===1&&'actual'}>Editar perfil</button>
+            <button onClick={()=>{click(2)}} className={actual===2&&'actual'}>Cambiar contraseña</button>
         </div>
     )
 }

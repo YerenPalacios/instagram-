@@ -1,10 +1,9 @@
 import './post.scss'
 import { useState } from 'react'
-import { Navigate, useNavigate } from "react-router-dom";
 import SimpleImageSlider from 'react-simple-image-slider'
 import moment from 'moment'
-import {default as ico} from './../icons'
-import {getToken} from '../../helpers'
+import { default as ico } from './../icons'
+import { getToken } from '../../helpers'
 import api from '../../api.json'
 import PostOptions from '../postOptions/postOptions';
 
@@ -13,7 +12,7 @@ import PostOptions from '../postOptions/postOptions';
 function CommentForm({ onComment, setText, text }) {
 
     const handleEnter = (e) => {
-        if (e.key === 'Enter'){
+        if (e.key === 'Enter') {
             e.target.value = ''
             onComment()
         }
@@ -28,34 +27,34 @@ function CommentForm({ onComment, setText, text }) {
     )
 }
 
-export default function Post({ data}) {
+export default function Post({ data }) {
     const [options, setOptions] = useState(false)
     const images = data.images.map(img => ({ url: img.image }))
     var date = moment(data.created_at).fromNow()
-    
-    function mapComments(comments){
-        return comments.map((c,i) => (
+
+    function mapComments(comments) {
+        return comments.map((c, i) => (
             <p key={i} className="comment"><b>{c.user.name} </b>{c.text}</p>
         ))
     }
-    
+
     const [liked, setLiked] = useState(data.is_liked)
     const [numLikes, setNumLikes] = useState(data.likes)
     const [userComments, setUserComments] = useState({
         comments: mapComments(data.comments),
-        count:data.count_comments
+        count: data.count_comments
     })
 
- 
+
     const [text, setText] = useState('')
 
     const handleLike = () => {
         fetch(api.url + 'like/', {
             method: 'POST',
-            headers: { 
+            headers: {
                 'Content-Type': 'application/json',
-                'Authorization':getToken()
-             },
+                'Authorization': getToken()
+            },
             body: JSON.stringify({ post: data.id })
         }).then(res => res.json())
             .then(data => {
@@ -67,33 +66,32 @@ export default function Post({ data}) {
     const handleComment = () => {
         fetch(api.url + 'comment/', {
             method: 'POST',
-            headers: { 
+            headers: {
                 'Content-Type': 'application/json',
-                'Authorization':getToken()
+                'Authorization': getToken()
             },
             body: JSON.stringify({ post: data.id, text: text })
         }).then(res => res.json())
             .then(data => {
-                if (data.comments){
+                if (data.comments) {
                     setUserComments({
-                        comments:mapComments(data.comments),
-                        count:userComments.count + 1
+                        comments: mapComments(data.comments),
+                        count: userComments.count + 1
                     })
                     setText('')
                 }
             })
     }
 
-
     return (
         <div className="post">
-            {options?<PostOptions id={data.id} hide={setOptions}/>:null}
+            {options && <PostOptions id={data.id} hide={setOptions} />}
             <div className="head">
                 <div className="user">
-                    <img src={data.user.image} />
+                    <div className='icon'><img src={data.user.image} alt="user"/></div>
                     <p>{data.user.username}</p>
                 </div>
-                <button onClick={()=>{setOptions(true)}}>•••</button>
+                <button onClick={() => { setOptions(true) }}>•••</button>
             </div>
 
             <div className="images">
@@ -104,14 +102,14 @@ export default function Post({ data}) {
                         images={images}
                         showBullets={false}
                         showNavs={false}
-                    /> : data.images.length > 1 ?
+                    /> : data.images.length > 1 &&
                         <SimpleImageSlider
                             width={896}
                             height={504}
                             images={images}
                             showBullets={true}
                             showNavs={true}
-                        /> : null
+                        />
                 }
 
             </div>
@@ -120,7 +118,7 @@ export default function Post({ data}) {
                 <div>
                     <button onClick={handleLike}>
                         {liked ? ico.liked_svg : ico.like_svg}
-                    </button> 
+                    </button>
                     <button>{ico.comment}</button>
                     <button>{ico.share}</button>
                 </div>
