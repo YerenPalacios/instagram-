@@ -72,22 +72,22 @@ function UserMenu() {
     }
 
     if (auth)
-    return (
-        <div className="user-menu" ref={ref}>
-            <div className="user-icon">
-                <img src={auth.user.image ? api.url + auth.user.image : testImg} alt="" />
+        return (
+            <div className="user-menu" ref={ref}>
+                <div className="user-icon">
+                    <img src={auth.user.image ? api.url + auth.user.image : testImg} alt="" />
+                </div> Profile
+                {isVisible && (
+                    <div className="menu">
+                        <Link to={"/" + auth.user.username}>{ico.profile} Perfil</Link>
+                        <Link to={`${auth.user.username}/saved`}>{ico.save} Guardado</Link>
+                        <Link to={"/edit"}>{ico.settings} Configuración</Link>
+                        <Link to="">{ico.change} Cambiar de cuenta</Link>
+                        <p onClick={logout} >Salir</p>
+                    </div>
+                )}
             </div>
-            {isVisible && (
-                <div className="menu">
-                    <Link to={"/" + auth.user.username}>{ico.profile} Perfil</Link>
-                    <Link to={`${auth.user.username}/saved`}>{ico.save} Guardado</Link>
-                    <Link to={"/edit"}>{ico.settings} Configuración</Link>
-                    <Link to="">{ico.change} Cambiar de cuenta</Link>
-                    <p onClick={logout} >Salir</p>
-                </div>
-            )}
-        </div>
-    )
+        )
     else return null
 }
 
@@ -99,22 +99,23 @@ export default function Header() {
 
     const handleFocus = () => {
         setShowList(!showList)
-    }    
+    }
 
     return (
         <header>
-            {/* <img src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png" alt="" className="logo" /> */}
-            <div className="search">
+            <div className='logo'>{ico.logo}</div>
+            {/* <div className="search">
                 <input onBlur={handleFocus} onFocus={handleFocus} type="search" size="30" placeholder="Buscar" />
 
                 {showList && <Search loading={listLoading} users={usersList} />}
-            </div>
+            </div> */}
             <div className="icons">
-                <Link to="/">{ico.home}</Link>
-                <Link to="/inbox">{ico.share}</Link>
-                <button onClick={() => setShowNewPostDiv(true)}>{ico.add}</button>
-                <button>{ico.find}</button>
-                <button>{ico.like_svg}</button>
+                <Link to="/">{ico.home} Home</Link>
+                <Link to="/inbox">{ico.search} Search</Link>
+                <Link to="/inbox">{ico.share} Messages</Link>
+                <button onClick={() => setShowNewPostDiv(true)}>{ico.add} Create</button>
+                <button>{ico.find} Explore</button>
+                <button>{ico.like_svg} Notifications</button>
                 <UserMenu />
             </div>
             {showNewPostDiv && <NewPost hide={setShowNewPostDiv}></NewPost>}

@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react'
 import Post from '../components/Post/post'
-import Header from '../components/haeader/header'
 import StoriesBar from '../components/storiesBar/storiesBar'
 import './pages.css'
 import { useFetch } from '../helpers'
+import Page from '../components/page/page'
 
 export default function Home() {
     const [posts, setPosts] = useState([])
@@ -18,13 +18,10 @@ export default function Home() {
     }, [])
 
     return (
-        <div>
-            <Header />
-            <div className="container">
-                <StoriesBar />
-                {loading && <p>cargando...</p>}
-                {posts}
-            </div>
-        </div>
+        <Page>
+            <StoriesBar />
+            {loading && <p>cargando...</p>}
+            {posts}
+        </Page>
     )
 }

@@ -1,8 +1,9 @@
 .profilesView {
     display: grid;
-    grid-template-columns: 40% auto;
+    grid-template-columns: 30% auto;
     align-items: flex-start;
     color: hsl(0, 0%, 15%);
+    margin-bottom: 30px;
 
     .user-image {
         width: 140px;
