@@ -1,85 +1,88 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;1,100;1,300&display=swap');
-*{font-family: 'Roboto', sans-serif;}
-body{
-    background-color: #fafafa;
-}
-.post{
+
+
+.post {
     // position: relative;
     overflow: hidden;
-    max-width: 800px;
-    color:#262626;
+    max-width: 600px;
+    margin: auto;
+    color: #262626;
     background-color: #fff;
     border: 1px solid #e6e6e6;
     margin-bottom: 25px;
 
-    .buttons{
+    .buttons {
         display: flex;
         justify-content: space-between;
         padding: 5px;
 
-        button{
+        button {
             background-color: transparent;
             border: none;
             padding: 12px;
             margin: 0 5px;
             cursor: pointer;
-            :hover{
+
+            :hover {
                 opacity: .7;
             }
         }
     }
 
-    .text{
+    .text {
         padding: 16px;
         padding-top: 0;
         font-size: 14px;
 
-        p:first-child{
-            margin-top:0
+        p:first-child {
+            margin-top: 0
         }
     }
 
-    .last_text{
+    .last_text {
         color: #8e8e8e;
-        :last-child{
+
+        :last-child {
             font-size: 12px;
             text-transform: capitalize;
         }
     }
 
-    .images{
-        div{
+    .images {
+        div {
             position: relative;
             width: 100% !important;
         }
-        > div > div {
+
+        >div>div {
             width: 100% !important;
         }
-    
+
     }
-    .head{
+
+    .head {
         display: flex;
         justify-content: space-between;
         align-items: center;
 
-        button{
+        button {
             background-color: transparent;
-            border:none;
+            border: none;
             font-size: 20px;
             letter-spacing: 3px;
             color: #262626;
             margin-right: 15px;
         }
 
-        .user{
+        .user {
             display: flex;
             align-items: center;
             padding: 14px;
             grid-gap: 15px;
-            font-weight:500;
+            font-weight: 500;
             font-size: 15px;
 
-            .icon{
+            .icon {
                 overflow: hidden;
                 width: 35px;
                 height: 35px;
@@ -88,43 +91,44 @@ body{
                 place-items: center;
             }
 
-            img{
+            img {
                 width: 100%;
             }
 
-            p{
+            p {
                 margin: 0;
             }
         }
-        
+
     }
-    
+
 }
 
-.rsis-container{
+.rsis-container {
     position: relative;
 }
 
-.add_comment{
+.add_comment {
     display: grid;
     grid-template-columns: 50px auto 100px;
     padding: 10px;
-    
-    button{
-        background-color:transparent;
+
+    button {
+        background-color: transparent;
         border: none;
         display: flex;
         align-items: center;
         justify-content: center;
-        padding:5px;
-        cursor:pointer;
-        :last-child{
+        padding: 5px;
+        cursor: pointer;
+
+        :last-child {
             color: #0095f6;
             font-weight: 600;
-         }
+        }
     }
 
-    input{
+    input {
         border: none;
         outline: none;
         font-size: 15px;

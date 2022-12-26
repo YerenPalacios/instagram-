@@ -5,15 +5,16 @@ import './profilesView.scss'
 import testImg from '../../p.png'
 import { useFetch } from '../../helpers'
 import { AuthContext } from "../../context/datacontext"
+import icons from "../icons"
 
 
 function ProfileBody() {
     return (
         <div className="profile-body">
             <ul className="tablist">
-                <li>Publicaciones</li>
-                <li>Guardado</li>
-                <li>Etiquetadas</li>
+                <li>{icons.posts} Publicaciones</li>
+                <li>{icons.saved} Guardado</li>
+                <li>{icons.tagged} Etiquetadas</li>
             </ul>
         </div>
     )
@@ -73,7 +74,7 @@ export default function ProfilesView() {
     }
 
     return (
-        <div>
+        <div className="container">
             <div className="profilesView">
                 <div className="user-image"><img src={user.image || testImg} alt="" /></div>
                 <div className="profile-data">
