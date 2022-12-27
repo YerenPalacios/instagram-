@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import Post from '../components/Post/post'
 import StoriesBar from '../components/storiesBar/storiesBar'
-import './pages.css'
+import './pages.scss'
 import { useFetch } from '../helpers'
 import Page from '../components/page/page'
 

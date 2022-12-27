@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
+import './index.scss';
+import './App.css'
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
@@ -45,9 +46,8 @@ ReactDOM.render(
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/" element={<Home />} />
-          <Route path="/:username" element={<Profile />} />
-          <Route path="/:username/saved" element={<div>guardados</div>} />
-          <Route path="/edit" element={<Edit />} />
+          <Route path="/:username" element={<Profile />} />          <Route path="/edit" element={<Edit />} />
+          <Route path="/:username/:tab" element={<Profile />} />          <Route path="/edit" element={<Edit />} />
           <Route path="/inbox" element={<Inbox />} />
           <Route path="/inbox/:username" element={<Inbox />} />
           <Route path="/accounts" element={<Inbox />} />

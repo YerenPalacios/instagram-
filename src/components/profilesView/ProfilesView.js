@@ -6,16 +6,43 @@ import testImg from '../../p.png'
 import { useFetch } from '../../helpers'
 import { AuthContext } from "../../context/datacontext"
 import icons from "../icons"
+import NotFound from "../notFound/notFound"
+import { useRef } from "react"
+
+
+function SimplePost({ data }) {
+    return (
+        <div className="simple-post">
+            <img src={data.images && data.images[0].image} />
+            <div className="hover-data">
+                <p>{icons.like_svg} {data.likes}</p>
+                <p>{icons.comment} {data.count_comments}</p>
+            </div>
+        </div>
+    )
+}
 
 
 function ProfileBody() {
+    const { username, tab } = useParams()
+    const { get, loading } = useFetch()
+    const navigate = useNavigate()
+
+    const [posts, setPosts] = useState([])
+
+    useEffect(() => {
+        get('post/').then(data => setPosts(data.map((i, k) => <SimplePost data={i} key={k} />)))
+    }, [tab]);
+
     return (
         <div className="profile-body">
             <ul className="tablist">
-                <li>{icons.posts} Publicaciones</li>
-                <li>{icons.saved} Guardado</li>
-                <li>{icons.tagged} Etiquetadas</li>
+                <li className={!tab && 'current'} onClick={() => navigate(`/${username}`)}>{icons.posts} Publicaciones</li>
+                <li className={tab === 'saved' && 'current'} onClick={() => navigate(`/${username}/saved`)}>{icons.saved} Guardado</li>
+                <li className={tab === 'tagged' && 'current'} onClick={() => navigate(`/${username}/tagged`)}>{icons.tagged} Etiquetadas</li>
             </ul>
+            {loading&&'cargando...'}
+            <div className="SimplePostContainer">{posts}</div>
         </div>
     )
 }
@@ -24,7 +51,7 @@ export default function ProfilesView() {
     const navigate = useNavigate()
     const { username } = useParams()
     const { auth } = useContext(AuthContext)
-    const { get, post, remove, loading } = useFetch('chatlist/')
+    const { get, post, remove, loading } = useFetch(false)
 
     const [user, setUser] = useState({})
     const [following, setFollowing] = useState()
@@ -33,26 +60,14 @@ export default function ProfilesView() {
 
     useEffect(() => {
         get('user/' + username).then(data => {
-            // TODO: review how to set not found True 
-            if (data.detail) {
-                setNotFound(true)
-            } else {
+            if (data.detail) setNotFound(true)
+            else {
                 setUser(data)
                 setFollowing(data.following)
                 setIsSesionUser(auth.user.id === data.id)
             }
         })
     }, [username])
-
-    if (notFound) {
-        return (
-            <div className="not-found">
-                <h1>Esta página no está disponible.</h1>
-                <p>Es posible que el enlace que seleccionaste esté roto o que se haya eliminado la página.</p>
-                <Link to="/">Volver a Instagram.</Link>
-            </div>
-        )
-    }
 
     const createMessaje = () => {
         post('chatlist/', { username }).then(() => navigate('/inbox/' + username))
@@ -73,8 +88,9 @@ export default function ProfilesView() {
             })
     }
 
+    if (notFound) return <NotFound />
     return (
-        <div className="container">
+        <>
             <div className="profilesView">
                 <div className="user-image"><img src={user.image || testImg} alt="" /></div>
                 <div className="profile-data">
@@ -82,14 +98,14 @@ export default function ProfilesView() {
                         <h1>{user.username}</h1>
                         {isSesionUser ?
                             <>
-                                <Link to="/edit">Editar Perfil</Link>
-                                <div>o</div>
+                                <button onClick={()=>navigate('/edit')}>Editar Perfil</button>
+                                <div>{icons.setting}</div>
                             </> :
                             <>
                                 <button onClick={createMessaje}>Enviar mensaje</button>
                                 <button disabled={loading} onClick={handleFollow}>
                                     {following ? 'unfollow' : 'follow'}
-                                </button> 
+                                </button>
                                 <button>A</button>
                                 <div>...</div>
                             </>
@@ -105,6 +121,6 @@ export default function ProfilesView() {
                 </div>
             </div>
             <ProfileBody />
-        </div>
+        </>
     )
 }
