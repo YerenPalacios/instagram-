@@ -37,7 +37,9 @@ header {
         align-items: center;
         justify-content: center;
     }
-    svg, .user-icon{
+
+    svg,
+    .user-icon {
         margin-right: 20px;
     }
 
@@ -128,14 +130,16 @@ header .menu {
     font-size: 14px;
     padding: 5px 0;
 
-    a{
+    a {
         display: flex;
         align-items: center;
         padding: 15px 20px;
     }
 }
 
-header a, header button, header .user-menu {
+header a,
+header button,
+header .user-menu {
     padding: 15px 0px;
     padding-right: 60px;
     margin: 0;

@@ -39,7 +39,7 @@ export function UpdateUserSesion(user) {
 
 const LOGIN_PATH = 'login/'
 
-export const useFetch = () => {
+export const useFetch = (auto_errors = true) => {
     const navigate = useNavigate()
     const [loading, setLoading] = useState(false);
     const { auth } = useContext(AuthContext)
@@ -57,7 +57,7 @@ export const useFetch = () => {
             api.url + path, options
         ).then(res => {
             if (res.status >= 500) throw setError('Ha ocurrido un error')
-            if (res.status >= 400) 
+            if (res.status >= 400 && auto_errors)
                 // TODO: think how to use 400 errors
                 throw res.json().then((data=>{
                     setError(JSON.stringify(data))

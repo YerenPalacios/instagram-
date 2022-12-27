@@ -91,7 +91,7 @@ export default function NewPost({hide}){
                     <div>
                         <img src={icon} alt="add photo" />
                         <p>Arrastra las fotos y los videos aquí</p>
-                        <input onChange={handleAddFile} type="file" id="images" multiple/>
+                        <input onChange={handleAddFile} type="file" id="images" accept="image/png, image/jpeg" multiple/>
                         <label htmlFor='images'>seleccionar de la computadora</label>
                     </div>
                 </div>
