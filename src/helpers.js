@@ -57,14 +57,14 @@ export const useFetch = (auto_errors = true) => {
         return fetch(
             api.url + path, options
         ).then(res => {
-            if (res.status >= 500) throw setError('Ha ocurrido un error')
+            if (res.status >= 500) {throw setError('Ha ocurrido un error')}
             if (res.status >= 400 && auto_errors)
                 // TODO: think how to use 400 errors
                 throw res.json().then((data => {
                     setError(JSON.stringify(data))
                 }))
             else return res.json()
-        }).catch(e => { throw setError(e.toString()) }
+        }).catch(e => { setError('Ha ocurrido un error') }
         ).finally(() => setLoading(false))
     }
 

@@ -4,7 +4,6 @@ import { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import gif from './ZKZg.gif'
 import api from '../../api.json'
-import { getUserSesion } from '../../helpers';
 import NewPost from '../newPost/newPost';
 import testImg from '../../p.png'
 import { useContext } from 'react';

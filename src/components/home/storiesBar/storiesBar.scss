@@ -1,5 +1,7 @@
+@import './../../../base.scss';
+
 .stories_bar {
-    max-width: 600px;
+    max-width: 550px;
     margin: auto;
     background-color: #fff;
     border: 1px solid #e6e6e6;
@@ -7,21 +9,17 @@
     display: flex;
     grid-gap: 27px;
     margin-bottom: 30px;
+    overflow: auto;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
 
     .profile {
         width: 56px
     }
 
     .profile {
-        .image {
-            width: 56px;
-            height: 56px;
-            border-radius: 50%;
-            overflow: hidden;
-            display: grid;
-            align-items: center;
-        }
-
         p {
             font-size: 12px;
             text-align: center;
@@ -38,11 +36,6 @@
             color: #262626;
         }
 
-        img {
-            width: 100%;
-            height: 100%;
-            display: block;
-            object-fit: cover;
-        }
+
     }
 }
