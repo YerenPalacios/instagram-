@@ -1,3 +1,5 @@
+@import './../../base.scss';
+
 header {
     box-sizing: border-box;
     width: 100%;
@@ -184,20 +186,9 @@ header .menu::after {
 }
 
 header .user-icon {
-    border-radius: 50%;
-    overflow: hidden;
+    @extend .image;
     width: 25px;
     height: 25px;
-    border-radius: 50%;
-    outline: 1px solid #242424;
-    border: 1px solid #fff;
-    display: grid;
-    place-items: center;
-
-    img {
-        width: 100%;
-        display: flex;
-    }
 }
 
 

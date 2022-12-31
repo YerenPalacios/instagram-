@@ -1,10 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;1,100;1,300&display=swap');
-
+@import './../../base.scss';
 
 .post {
-    // position: relative;
+    border-radius: 10px;
     overflow: hidden;
-    max-width: 600px;
+    max-width: 550px;
     margin: auto;
     color: #262626;
     background-color: #fff;
@@ -83,16 +83,9 @@
             font-size: 15px;
 
             .icon {
-                overflow: hidden;
+                @extend .image;
                 width: 35px;
                 height: 35px;
-                border-radius: 50%;
-                display: grid;
-                place-items: center;
-            }
-
-            img {
-                width: 100%;
             }
 
             p {

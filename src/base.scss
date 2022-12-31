@@ -1,0 +1,42 @@
+$base-text: #262626;
+$base-text2: #8e8e8e;
+
+p{
+    color:$base-text;
+}
+
+.image {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    overflow: hidden;
+    display: grid;
+    align-items: center;
+
+    img {
+        width: 100%;
+        height: 100%;
+        display: block;
+        object-fit: cover;
+    }
+}
+.small{
+    width: 35px !important;
+    height: 35px !important;
+}
+
+.simpleButton{
+    background-color: transparent;
+    color: #0095f6;
+    border: none;
+    outline: none;
+    font-size: 12px;
+    font-weight: bold;
+    cursor: pointer;
+}
+.simpleButton:hover{
+    filter: brightness(.7);
+}
+.loadingBtn{
+    opacity: .5;
+}
