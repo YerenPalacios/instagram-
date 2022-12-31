@@ -21,7 +21,7 @@ export default function StoriesBar() {
                 {loading && <p>loading...</p>}
                 {profiles.map((p, i) => (
                     <div key={i} className="profile">
-                        <img src={p.image ? p.image : testImg} alt="" />
+                        <div className="image"><img src={p.image ? p.image : testImg} alt="" /></div>
                         <p><Link to={"/" + p.username}>{p.username}</Link></p>
                     </div>
                 ))}

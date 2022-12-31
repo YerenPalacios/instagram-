@@ -38,6 +38,7 @@ export function UpdateUserSesion(user) {
 }
 
 const LOGIN_PATH = 'login/'
+const SIGN_PATH = 'sign-up/'
 
 export const useFetch = (auto_errors = true) => {
     const navigate = useNavigate()
@@ -50,8 +51,8 @@ export const useFetch = (auto_errors = true) => {
      * @param {object} options
      */
     const runFetch = (path, options = {}) => {
-        if (path !== LOGIN_PATH && !auth)
-            return navigate(LOGIN_PATH)
+        if (path !== LOGIN_PATH && path !== SIGN_PATH && !auth)
+            return navigate('/login')
 
         return fetch(
             api.url + path, options
@@ -59,11 +60,11 @@ export const useFetch = (auto_errors = true) => {
             if (res.status >= 500) throw setError('Ha ocurrido un error')
             if (res.status >= 400 && auto_errors)
                 // TODO: think how to use 400 errors
-                throw res.json().then((data=>{
+                throw res.json().then((data => {
                     setError(JSON.stringify(data))
                 }))
             else return res.json()
-        }).catch(e => {throw setError(e.toString())}
+        }).catch(e => { throw setError(e.toString()) }
         ).finally(() => setLoading(false))
     }
 
@@ -79,7 +80,20 @@ export const useFetch = (auto_errors = true) => {
 
         return runFetch(LOGIN_PATH, options)
     }
-    
+
+    const sign = (body) => {
+        setLoading(true);
+        const options = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(body)
+        }
+
+        return runFetch(SIGN_PATH, options)
+    }
+
     const get = (path) => {
         setLoading(true);
         const options = {
@@ -119,5 +133,5 @@ export const useFetch = (auto_errors = true) => {
         return runFetch(path, options)
     }
 
-    return { get, post, remove, login, error, loading, setLoading };
+    return { get, post, remove, login, sign, error, loading, setLoading };
 }
