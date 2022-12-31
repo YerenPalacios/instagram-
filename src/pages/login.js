@@ -1,10 +1,9 @@
-import LoginForm from "../components/form/loginForm";
+import FormContainer from "../components/form/formContainer";
 
 export default function Login(){
     return(
         <div className="loginPage">
-            {/* TODO: use both forms in separated components */}
-            <LoginForm/>
+            <FormContainer/>
         </div>
     )
 }
