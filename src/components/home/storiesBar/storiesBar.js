@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import testImg from '../../../p.png'
 
-import { useFetch } from '../../../helpers'
+import { getUserImage, useFetch } from '../../../helpers'
 
 export default function StoriesBar() {
     const [profiles, setProfiles] = useState([])
@@ -21,7 +21,7 @@ export default function StoriesBar() {
                 {loading && <p>loading...</p>}
                 {profiles.map((p, i) => (
                     <div key={i} className="profile">
-                        <div className="image"><img src={p.image ? p.image : testImg} alt="" /></div>
+                        <div className="image"><img src={getUserImage(p)} alt="" /></div>
                         <p><Link to={"/" + p.username}>{p.username}</Link></p>
                     </div>
                 ))}
