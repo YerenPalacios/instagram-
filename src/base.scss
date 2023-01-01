@@ -1,8 +1,8 @@
 $base-text: #262626;
 $base-text2: #8e8e8e;
 
-p{
-    color:$base-text;
+p {
+    color: $base-text;
 }
 
 .image {
@@ -20,12 +20,20 @@ p{
         object-fit: cover;
     }
 }
-.small{
-    width: 35px !important;
-    height: 35px !important;
+
+.commonButton {
+    padding: 8px 18px;
+    border-radius: 10px;
+    background-color: #0095f6;
+    color: #fff;
+    border: none;
+    outline: none;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
 }
 
-.simpleButton{
+.simpleButton {
     background-color: transparent;
     color: #0095f6;
     border: none;
@@ -34,9 +42,11 @@ p{
     font-weight: bold;
     cursor: pointer;
 }
-.simpleButton:hover{
+
+.simpleButton:hover {
     filter: brightness(.7);
 }
-.loadingBtn{
+
+.loadingBtn {
     opacity: .5;
 }

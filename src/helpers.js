@@ -138,7 +138,7 @@ export const useFetch = (auto_errors = true) => {
 
 export function getUserImage(data) {
     // TODO: add user color field??
-    if (data.image) return data.image
+    if (data.image) return data.image.includes('http')? data.image: api.url + data.image
     const color = '#'+Math.floor(Math.random()*16777215).toString(16);
     console.log(color)
     const letter = data.username.slice(0, 1).toUpperCase()
