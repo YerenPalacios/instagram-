@@ -1,9 +1,11 @@
 * {
     font-family: 'Roboto', sans-serif;
 }
-body{
+
+body {
     overflow: hidden;
 }
+
 #root {
     position: absolute;
     display: grid;
@@ -25,14 +27,23 @@ body {
     overflow: auto;
 }
 
-.loginPage{
+.loginPage {
     position: absolute;
     width: 100%;
     height: 100%;
     overflow: auto;
 }
 
-.flexContainer{
+.flexContainer {
     display: flex;
     justify-content: center;
+}
+
+.explorePeopleContainer {
+    max-width: 550px;
+    margin: auto;
+    .users{
+        background-color: #fff;
+        padding: 20px;
+    }
 }

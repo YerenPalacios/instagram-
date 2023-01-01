@@ -8,6 +8,7 @@ import NewPost from '../newPost/newPost';
 import testImg from '../../p.png'
 import { useContext } from 'react';
 import { AuthContext } from '../../context/datacontext';
+import { getUserImage } from '../../helpers';
 
 //todo: finish this search
 
@@ -74,7 +75,7 @@ function UserMenu() {
         return (
             <div className="user-menu" ref={ref}>
                 <div className="user-icon">
-                    <img src={auth.user.image ? api.url + auth.user.image : testImg} alt="" />
+                    <img src={getUserImage(auth.user)} alt="" />
                 </div> Profile
                 {isVisible && (
                     <div className="menu">
@@ -113,7 +114,7 @@ export default function Header() {
                 <Link to="/inbox">{ico.search} Search</Link>
                 <Link to="/inbox">{ico.share} Messages</Link>
                 <button onClick={() => setShowNewPostDiv(true)}>{ico.add} Create</button>
-                <button>{ico.find} Explore</button>
+                <Link to="/explore">{ico.find} Explore</Link>
                 <button>{ico.like_svg} Notifications</button>
                 <UserMenu />
             </div>
