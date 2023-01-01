@@ -8,7 +8,7 @@ export const AuthContext = createContext()
 export const AuthProvider = ({ children }) => {
     const navigate = useNavigate()
     const [auth, setAuth] = useState(LocalStorage.get('auth'))
-
+    if (!auth && !window.location.href.includes('/login')) window.location.href = '/login'
     useEffect(() => {
       !auth && navigate('/login')
     }, [])
