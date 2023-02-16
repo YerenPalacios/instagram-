@@ -12,7 +12,7 @@ export default function Home() {
 
     useEffect(() => {
         get('post/').then(data =>
-            setPosts(data.map((post, i) => (
+            setPosts(data?.map((post, i) => (
                 <Post key={i} data={post} />
             )))
         )

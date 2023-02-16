@@ -25,7 +25,7 @@ function RegForm() {
         let password = passInput.current.value
 
         if (email.length || phone.length && name.length && password.length) {
-            sign({ ...email ? { email } : { phone }, name, username, password }).then(data=>{
+            sign({ ...email ? { email } : { phone }, name, username, password }).then(data => {
                 LocalStorage.set('auth', data)
                 setAuth(data)
                 navigate('/')
@@ -60,9 +60,12 @@ function LoginForm() {
         e.preventDefault()
         if (email.length > 0 && password.length > 0)
             login({ email, password }).then(data => {
-                LocalStorage.set('auth', data)
-                setAuth(data)
-                navigate('/')
+                if (data) {
+                    LocalStorage.set('auth', data)
+                    setAuth(data)
+                    navigate('/')
+                }
+
             })
     }
 

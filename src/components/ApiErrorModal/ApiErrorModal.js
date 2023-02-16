@@ -11,7 +11,6 @@ export function APIErrorModal() {
   useEffect(() => {
     if (errorContext.error)
       setTimeout(() => {
-        console.log('aaa',errorContext.error)
         errorContext.setError(null)
       }, modalDuration * 1000);
   }, [errorContext])
