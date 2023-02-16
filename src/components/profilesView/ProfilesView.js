@@ -38,7 +38,7 @@ function ProfileBody() {
         <div className="profile-body">
             <ul className="tablist">
                 <li className={!tab && 'current'} onClick={() => navigate(`/${username}`)}>{icons.posts} Publicaciones</li>
-                <li className={tab === 'saved' && 'current'} onClick={() => navigate(`/${username}/saved`)}>{icons.saved} Guardado</li>
+                <li className={tab === 'saved' && 'current'} onClick={() => navigate(`/${username}/saved`)}>{icons.save} Guardado</li>
                 <li className={tab === 'tagged' && 'current'} onClick={() => navigate(`/${username}/tagged`)}>{icons.tagged} Etiquetadas</li>
             </ul>
             {loading&&'cargando...'}

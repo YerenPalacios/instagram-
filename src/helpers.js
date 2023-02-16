@@ -139,7 +139,6 @@ export function getUserImage(data) {
     // TODO: add user color field??
     if (data.image) return data.image.includes('http')? data.image: api.url + data.image
     const color = '#'+Math.floor(Math.random()*16777215).toString(16);
-    console.log(color)
     const letter = data.username?.slice(0, 1).toUpperCase()
     const b = `<svg height="100" width="100" xmlns="http://www.w3.org/2000/svg">
     <rect width="100" height="100" style="fill:${color}" />
