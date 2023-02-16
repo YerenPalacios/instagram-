@@ -59,12 +59,11 @@ export const useFetch = (auto_errors = true) => {
         ).then(res => {
             if (res.status >= 500) {throw setError('Ha ocurrido un error')}
             if (res.status >= 400 && auto_errors)
-                // TODO: think how to use 400 errors
-                throw res.json().then((data => {
-                    setError(JSON.stringify(data))
+                res.json().then((data => {
+                    throw setError(data[Object.keys(data)[0]])
                 }))
             else return res.json()
-        }).catch(e => { setError('Ha ocurrido un error') }
+        }).catch(e => { throw setError('Ha ocurrido un error') }
         ).finally(() => setLoading(false))
     }
 
@@ -141,7 +140,7 @@ export function getUserImage(data) {
     if (data.image) return data.image.includes('http')? data.image: api.url + data.image
     const color = '#'+Math.floor(Math.random()*16777215).toString(16);
     console.log(color)
-    const letter = data.username.slice(0, 1).toUpperCase()
+    const letter = data.username?.slice(0, 1).toUpperCase()
     const b = `<svg height="100" width="100" xmlns="http://www.w3.org/2000/svg">
     <rect width="100" height="100" style="fill:${color}" />
     <text x="50%" y="57%" alignment-baseline="middle" fill="#fff" text-anchor="middle" font-size='50px' font-family='sans-serif'>${letter}</text>

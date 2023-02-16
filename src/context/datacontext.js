@@ -10,7 +10,7 @@ export const AuthProvider = ({ children }) => {
     const [auth, setAuth] = useState(LocalStorage.get('auth'))
     if (!auth && !window.location.href.includes('/login')) window.location.href = '/login'
     useEffect(() => {
-      !auth && navigate('/login')
+      !auth ?? navigate('/login')
     }, [])
     
     return <AuthContext.Provider value={{ auth, setAuth, }}>{children}</AuthContext.Provider>

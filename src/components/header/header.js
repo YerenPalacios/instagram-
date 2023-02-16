@@ -1,11 +1,9 @@
 import { default as ico } from '../icons'
 import './header.scss'
 import { useState, useEffect, useRef } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import gif from './ZKZg.gif'
-import api from '../../api.json'
 import NewPost from '../newPost/newPost';
-import testImg from '../../p.png'
 import { useContext } from 'react';
 import { AuthContext } from '../../context/datacontext';
 import { getUserImage } from '../../helpers';
@@ -92,6 +90,8 @@ function UserMenu() {
 }
 
 export default function Header() {
+    const location = useLocation()
+    const current = location.pathname
     const [usersList, setUsersList] = useState([1])
     const [showList, setShowList] = useState(false)
     const [listLoading, setListLoading] = useState(false)
@@ -110,11 +110,11 @@ export default function Header() {
                 {showList && <Search loading={listLoading} users={usersList} />}
             </div> */}
             <div className="icons">
-                <Link to="/">{ico.home} Home</Link>
+                <Link className={current === "/" ?? "current"} to="/">{ico.home} Home</Link>
                 <Link to="/inbox">{ico.search} Search</Link>
-                <Link to="/inbox">{ico.share} Messages</Link>
+                <Link className={current === "/inbox" ?? "current"} to="/inbox">{ico.share} Messages</Link>
                 <button onClick={() => setShowNewPostDiv(true)}>{ico.add} Create</button>
-                <Link to="/explore">{ico.find} Explore</Link>
+                <Link className={current === "/explore" ?? "current"}  to="/explore">{ico.find} Explore</Link>
                 <button>{ico.like_svg} Notifications</button>
                 <UserMenu />
             </div>
