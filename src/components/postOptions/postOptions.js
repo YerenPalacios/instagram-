@@ -35,7 +35,6 @@ export default function PostOptions({id,hide}){
         navigate('post/'+id)
     }
 
-    console.log(id)
     return(
         <div className="post-options">
             {error?<Error error={error}/>:null}
@@ -43,7 +42,6 @@ export default function PostOptions({id,hide}){
             <div className="options">
                 <button onClick={handleDelete}>Eliminar</button>
                 <button onClick={goPost}>Ir a la publicación</button>
-                <button>cancelar</button>
             </div>
         </div>
     )

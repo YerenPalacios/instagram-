@@ -3,7 +3,7 @@ import { useState } from 'react'
 import SimpleImageSlider from 'react-simple-image-slider'
 import moment from 'moment'
 import { default as ico } from './../icons'
-import { getToken } from '../../helpers'
+import { getToken, useFetch } from '../../helpers'
 import api from '../../api.json'
 import PostOptions from '../postOptions/postOptions';
 
@@ -28,6 +28,7 @@ function CommentForm({ onComment, setText, text }) {
 }
 
 export default function Post({ data }) {
+    const { get, post } = useFetch()
     const [options, setOptions] = useState(false)
     const images = data.images.map(img => ({ url: img.image }))
     var date = moment(data.created_at).fromNow()
@@ -39,6 +40,7 @@ export default function Post({ data }) {
     }
 
     const [liked, setLiked] = useState(data.is_liked)
+    const [saved, setSaved] = useState(data.is_saved)
     const [numLikes, setNumLikes] = useState(data.likes)
     const [userComments, setUserComments] = useState({
         comments: mapComments(data.comments),
@@ -49,38 +51,28 @@ export default function Post({ data }) {
     const [text, setText] = useState('')
 
     const handleLike = () => {
-        fetch(api.url + 'like/', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': getToken()
-            },
-            body: JSON.stringify({ post: data.id })
-        }).then(res => res.json())
-            .then(data => {
-                data.liked ? setNumLikes(numLikes + 1) : setNumLikes(numLikes - 1)
-                setLiked(data.liked)
-            })
+        post('like/', { post: data.id }).then(data => {
+            data.liked ? setNumLikes(numLikes + 1) : setNumLikes(numLikes - 1)
+            setLiked(data.liked)
+        })
+    }
+
+    const handleSave = () => {
+        post('save/', { post: data.id }).then(data => {
+            setSaved(data.saved)
+        })
     }
 
     const handleComment = () => {
-        fetch(api.url + 'comment/', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': getToken()
-            },
-            body: JSON.stringify({ post: data.id, text: text })
-        }).then(res => res.json())
-            .then(data => {
-                if (data.comments) {
-                    setUserComments({
-                        comments: mapComments(data.comments),
-                        count: userComments.count + 1
-                    })
-                    setText('')
-                }
-            })
+        post('comment/', { post: data.id, text: text }).then(data => {
+            if (data.comments) {
+                setUserComments({
+                    comments: mapComments(data.comments),
+                    count: userComments.count + 1
+                })
+                setText('')
+            }
+        })
     }
 
     return (
@@ -88,7 +80,7 @@ export default function Post({ data }) {
             {options && <PostOptions id={data.id} hide={setOptions} />}
             <div className="head">
                 <div className="user">
-                    <div className='icon'><img src={data.user.image} alt="user"/></div>
+                    <div className='icon'><img src={data.user.image} alt="user" /></div>
                     <p>{data.user.username}</p>
                 </div>
                 <button onClick={() => { setOptions(true) }}>•••</button>
@@ -103,13 +95,13 @@ export default function Post({ data }) {
                         showBullets={false}
                         showNavs={false}
                     /> : data.images.length > 1 &&
-                        <SimpleImageSlider
-                            width={896}
-                            height={504}
-                            images={images}
-                            showBullets={true}
-                            showNavs={true}
-                        />
+                    <SimpleImageSlider
+                        width={896}
+                        height={504}
+                        images={images}
+                        showBullets={true}
+                        showNavs={true}
+                    />
                 }
 
             </div>
@@ -122,7 +114,7 @@ export default function Post({ data }) {
                     <button>{ico.comment}</button>
                     <button>{ico.share}</button>
                 </div>
-                <button>{ico.save}</button>
+                <button onClick={handleSave}>{saved ? ico.saved : ico.save}</button>
             </div>
 
             <div className="text">
