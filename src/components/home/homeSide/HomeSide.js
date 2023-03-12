@@ -15,7 +15,7 @@ export default function HomeSide() {
 
     useEffect(() => {
         get('user/').then(data => {
-            setUsers(data.map(i => <ProfileInfo key={i.id} data={i} />))
+            setUsers(data?.map(i => <ProfileInfo key={i.id} data={i} />))
         })
     }, [])
 

@@ -101,6 +101,10 @@ export default function Header() {
         setShowList(!showList)
     }
 
+    const getCurrent = (e)=>{
+        if (current === e) return 'current'
+    }
+
     return (
         <header>
             <div className='logo'>{ico.logo}</div>
@@ -110,11 +114,11 @@ export default function Header() {
                 {showList && <Search loading={listLoading} users={usersList} />}
             </div> */}
             <div className="icons">
-                <Link className={current === "/" ?? "current"} to="/">{ico.home} Home</Link>
+                <Link className={getCurrent("/")} to="/">{ico.home} Home</Link>
                 <Link to="/inbox">{ico.search} Search</Link>
-                <Link className={current === "/inbox" ?? "current"} to="/inbox">{ico.share} Messages</Link>
+                <Link className={getCurrent("/inbox")} to="/inbox">{ico.share} Messages</Link>
                 <button onClick={() => setShowNewPostDiv(true)}>{ico.add} Create</button>
-                <Link className={current === "/explore" ?? "current"}  to="/explore">{ico.find} Explore</Link>
+                <Link className={getCurrent("/explore")}  to="/explore">{ico.find} Explore</Link>
                 <button>{ico.like_svg} Notifications</button>
                 <UserMenu />
             </div>
