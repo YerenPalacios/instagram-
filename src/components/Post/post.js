@@ -27,7 +27,7 @@ function CommentForm({ onComment, setText, text }) {
 }
 
 export default function Post({ data }) {
-    const { post } = useFetch()
+    const { post, loading } = useFetch()
     const [options, setOptions] = useState(false)
     const images = data.images.map(img => ({ url: img.image }))
     var date = moment(data.created_at).fromNow()
@@ -50,6 +50,7 @@ export default function Post({ data }) {
     const [text, setText] = useState('')
 
     const handleLike = () => {
+        if (loading) return 
         post('like/', { post: data.id }).then(data => {
             data.liked ? setNumLikes(numLikes + 1) : setNumLikes(numLikes - 1)
             setLiked(data.liked)
@@ -57,6 +58,7 @@ export default function Post({ data }) {
     }
 
     const handleSave = () => {
+        if (loading) return 
         post('save/', { post: data.id }).then(data => {
             setSaved(data.saved)
         })
