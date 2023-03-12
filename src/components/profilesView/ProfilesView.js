@@ -16,6 +16,7 @@ function SimplePost({ data }) {
             <img src={data.images && data.images[0].image} />
             <div className="hover-data">
                 <p>{icons.like_svg} {data.likes}</p>
+                {/* TODO: review if count is working */}
                 <p>{icons.comment} {data.count_comments}</p>
             </div>
         </div>
@@ -31,7 +32,7 @@ function ProfileBody() {
     const [posts, setPosts] = useState([])
 
     useEffect(() => {
-        get('post/').then(data => setPosts(data.map((i, k) => <SimplePost data={i} key={k} />)))
+        get('general-post/').then(data => setPosts(data.map((i, k) => <SimplePost data={i} key={k} />)))
     }, [tab]);
 
     return (

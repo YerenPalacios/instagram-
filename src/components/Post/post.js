@@ -3,8 +3,7 @@ import { useState } from 'react'
 import SimpleImageSlider from 'react-simple-image-slider'
 import moment from 'moment'
 import { default as ico } from './../icons'
-import { getToken, useFetch } from '../../helpers'
-import api from '../../api.json'
+import { useFetch } from '../../helpers'
 import PostOptions from '../postOptions/postOptions';
 
 // TODO: posts must have just user comments in main view
@@ -28,7 +27,7 @@ function CommentForm({ onComment, setText, text }) {
 }
 
 export default function Post({ data }) {
-    const { get, post } = useFetch()
+    const { post } = useFetch()
     const [options, setOptions] = useState(false)
     const images = data.images.map(img => ({ url: img.image }))
     var date = moment(data.created_at).fromNow()
