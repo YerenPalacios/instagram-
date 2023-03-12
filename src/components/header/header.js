@@ -78,7 +78,7 @@ function UserMenu() {
                 {isVisible && (
                     <div className="menu">
                         <Link to={"/" + auth.user.username}>{ico.profile} Perfil</Link>
-                        <Link to={`${auth.user.username}/saved`}>{ico.save} Guardado</Link>
+                        <Link to={`/${auth.user.username}/saved`}>{ico.save} Guardado</Link>
                         <Link to={"/edit"}>{ico.settings} Configuración</Link>
                         <Link to="">{ico.change} Cambiar de cuenta</Link>
                         <p onClick={logout} >Salir</p>
