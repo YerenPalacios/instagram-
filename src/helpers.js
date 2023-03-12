@@ -1,5 +1,5 @@
 import api from './api.json'
-import { useState } from 'react'
+import { useState, useEffect} from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useContext } from 'react'
 import { ApiErrorContext, AuthContext } from './context/datacontext'
@@ -43,8 +43,15 @@ const SIGN_PATH = 'sign-up/'
 export const useFetch = (auto_errors = true) => {
     const navigate = useNavigate()
     const [loading, setLoading] = useState(false);
+    const controller = new AbortController()
     const { auth } = useContext(AuthContext)
     const { error, setError } = useContext(ApiErrorContext)
+
+    useEffect(() => {
+        return () => {
+            if (controller) controller.abort()
+        };
+    }, []);
 
     /**
      * @param {string} path
@@ -55,7 +62,7 @@ export const useFetch = (auto_errors = true) => {
             return navigate('/login')
 
         return fetch(
-            api.url + path, options
+            api.url + path, {signal: controller?.signal, ...options},
         ).then(res => {
             if (res.status >= 500) {throw setError('Ha ocurrido un error')}
             if (res.status >= 400 && auto_errors)
@@ -63,8 +70,10 @@ export const useFetch = (auto_errors = true) => {
                     throw setError(data[Object.keys(data)[0]])
                 }))
             else return res.json()
-        }).catch(e => { throw setError('Ha ocurrido un error') }
-        ).finally(() => setLoading(false))
+        }).catch(e => {
+            if(e.name !== 'AbortError')
+                throw setError('Ha ocurrido un error') 
+        }).finally(() => setLoading(false))
     }
 
     const login = (body) => {
