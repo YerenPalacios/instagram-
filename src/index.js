@@ -19,6 +19,9 @@ import { ApiErrorProvider, AuthProvider } from './context/datacontext';
 import { APIErrorModal } from './components/ApiErrorModal/ApiErrorModal';
 import Explore from './pages/explore';
 import ExplorePeople from './pages/explorePeople';
+import PostWindow from './components/Base/PostWindow/postWindow';
+import { Provider } from 'react-redux';
+import store from './context/store';
 
 i18n
   .use(initReactI18next) // passes i18n down to react-i18next
@@ -43,24 +46,28 @@ i18n
 ReactDOM.render(
 
   <BrowserRouter>
-    <AuthProvider>
-      <ApiErrorProvider>
-        <Routes>
-          <Route path="/login" element={<Login />} />
-          <Route path="/" element={<Home />} />
-          <Route path="/:username" element={<Profile />} />          
-          <Route path="/edit" element={<Edit />} />
-          <Route path="/:username/:tab" element={<Profile />} />          
-          <Route path="/explore" element={<Explore />} />
-          <Route path="/explore/people" element={<ExplorePeople />} />
-          <Route path="/inbox" element={<Inbox />} />
-          <Route path="/inbox/:username" element={<Inbox />} />
-          <Route path="/accounts" element={<Inbox />} />
-          <Route path="*" element={<View404 />} />
-        </Routes>
-        <APIErrorModal></APIErrorModal>
-      </ApiErrorProvider>
-    </AuthProvider>
+    <Provider store={store}>
+      <AuthProvider>
+        <ApiErrorProvider>
+
+          <Routes>
+            <Route path="/login" element={<Login />} />
+            <Route path="/" element={<Home />} />
+            <Route path="/:username" element={<Profile />} />
+            <Route path="/edit" element={<Edit />} />
+            <Route path="/:username/:tab" element={<Profile />} />
+            <Route path="/explore" element={<Explore />} />
+            <Route path="/explore/people" element={<ExplorePeople />} />
+            <Route path="/inbox" element={<Inbox />} />
+            <Route path="/inbox/:username" element={<Inbox />} />
+            <Route path="/accounts" element={<Inbox />} />
+            <Route path="*" element={<View404 />} />
+          </Routes>
+          <APIErrorModal></APIErrorModal>
+          <PostWindow></PostWindow>
+        </ApiErrorProvider>
+      </AuthProvider>
+    </Provider>
   </BrowserRouter>
   ,
   document.getElementById('root')

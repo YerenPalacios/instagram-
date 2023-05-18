@@ -23,7 +23,7 @@ export default function HomeSide() {
         <div className="profileInfo">
             <div className="image"><img src={getUserImage(auth.user)} alt="icon" /></div>
             <div className='info'>
-                <h3>{auth.user.username}</h3>
+                <h3><Link to={"/" + auth.user.username}>{auth.user.username}</Link></h3>
                 <p>{auth.user.name}</p>
             </div>
             <button className="simpleButton">Switch</button>

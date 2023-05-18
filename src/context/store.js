@@ -1,0 +1,27 @@
+import { combineReducers, createStore } from "redux";
+
+const initialState = { current_post: null }
+
+const postsReducer = (state = initialState.current_post, action) => {
+    switch (action.type) {
+        case 'SET_CURRENT_POST':
+            return action.payload;
+        case 'DECREMENT':
+            return state - 1;
+        default:
+            return state;
+    }
+};
+
+const reducer = combineReducers({
+    current_post: postsReducer,
+});
+
+// Crea el store de Redux utilizando el reducer
+const store = createStore(
+    reducer,
+    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+
+);
+
+export default store;
