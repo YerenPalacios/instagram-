@@ -2,11 +2,11 @@ import './chatBox.scss';
 import infoIcon from './info.png'
 import { default as icon } from './../icons'
 import moment from 'moment';
-import { getToken } from '../../helpers'
-import { useState, useEffect} from 'react';
+import { useState, useEffect, useContext} from 'react';
 import api from '../../api.json'
 
 import testImg from '../../p.png'
+import { ApiErrorContext, AuthContext } from '../../context/datacontext';
 
 const connectionStates = [
     'Connecting',
@@ -21,13 +21,12 @@ export default function ChatBox({ room }) {
     const [connectionStatus, setConnectionStatus] = useState(3)
     const [messages, setMessages] = useState([])
     const items_div = document.getElementById('items')
+    const {auth} = useContext(AuthContext);
+    const { error, setError } = useContext(ApiErrorContext)
 
     useEffect(() => {
-        let ws = new WebSocket(api.ws + 'chat2/?'+'room_id='+room.id)
+        let ws = new WebSocket(api.ws + `chat2/?room_id=${room.id}&token=${auth.token}`)
         setWs(ws)
-        document.cookie = "Authorization=" + getToken();
-        document.cookie = "chat-id=" + room.id;
-
         return () => { setMessages([]); ws.close() }
     }, [room]);
 
@@ -42,19 +41,22 @@ export default function ChatBox({ room }) {
         }
         ws.onmessage = (e) => {
             const data = JSON.parse(e.data)
+            if (data.detail)
+                return setError(data.detail)
             
             if (data.type === 'get_messages'){
                 const saved_messages = data.data;
                 setMessages(saved_messages);
             } else {
-                const saved_message =  data.text
-                setMessages(messages.concat(saved_message))
+                console.warn(data)
+                setMessages(messages.concat(data))
             }
         }
         ws.onclose = () => {
             console.warn('WebSocket Disconnected');
             setConnectionStatus(ws.readyState)
         }
+
     }
 
     const handleSubmit = (e) => {

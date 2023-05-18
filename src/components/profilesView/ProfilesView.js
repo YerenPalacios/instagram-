@@ -7,12 +7,19 @@ import { useFetch } from '../../helpers'
 import { AuthContext } from "../../context/datacontext"
 import icons from "../icons"
 import NotFound from "../notFound/notFound"
-import { useRef } from "react"
+import { useDispatch } from "react-redux"
 
 
 function SimplePost({ data }) {
+    const dispatch = useDispatch();
+    function setCurrentPost() {
+        dispatch({
+            type: "SET_CURRENT_POST",
+            payload: data
+        })
+    }
     return (
-        <div className="simple-post">
+        <div onClick={setCurrentPost} className="simple-post">
             <img src={data.images && data.images[0].image} />
             <div className="hover-data">
                 <p>{icons.like_svg} {data.likes_count}</p>

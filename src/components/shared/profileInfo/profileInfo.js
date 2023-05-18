@@ -1,6 +1,7 @@
 import './profileInfo.scss'
 import { useState } from "react"
 import { getUserImage, useFetch } from "../../../helpers"
+import { Link } from 'react-router-dom'
 
 export function ProfileInfo({ data, style }) {
     const { post, remove, loading } = useFetch()
@@ -24,7 +25,7 @@ export function ProfileInfo({ data, style }) {
     return <div className={style === "bigger" ? "profileInfo" : "profileInfo smaller"} >
         <div className="image"><img src={data.image ? data.image : getUserImage(data)} alt="icon" /></div>
         <div className='info'>
-            <h3>{data.username}</h3>
+            <h3><Link to={"/" + data.username}>{data.username}</Link></h3>
             <p>{data.name}</p>
         </div>
         <button onClick={handleFollow} className={loading ? btnClass + " loadingBtn" : btnClass}>{following ? 'Unfollow' : 'Follow'}</button>
