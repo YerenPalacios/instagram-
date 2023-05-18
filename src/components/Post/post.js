@@ -40,9 +40,9 @@ export default function Post({ data }) {
 
     const [liked, setLiked] = useState(data.is_liked)
     const [saved, setSaved] = useState(data.is_saved)
-    const [numLikes, setNumLikes] = useState(data.likes)
+    const [numLikes, setNumLikes] = useState(data.likes_count)
     const [userComments, setUserComments] = useState({
-        comments: mapComments(data.comments),
+        comments: mapComments([]),
         count: data.count_comments
     })
 
@@ -68,7 +68,8 @@ export default function Post({ data }) {
         post('comment/', { post: data.id, text: text }).then(data => {
             if (data.comments) {
                 setUserComments({
-                    comments: mapComments(data.comments),
+                    // TODO: fix comments function
+                    comments: mapComments([]),
                     count: userComments.count + 1
                 })
                 setText('')
@@ -121,8 +122,8 @@ export default function Post({ data }) {
             <div className="text">
                 <p><b>{numLikes} Me gusta</b></p>
                 <p className="comment"><b>{data.user.name} </b>{data.text}</p>
-                <p className="last_text">Ver los {userComments.count} comentarios</p>
-                {userComments.comments}
+                <p className="last_text">Ver los {data.comments_count} comentarios</p>
+                {/* {userComments.comments} */}
                 <p className="last_text">{date}</p>
             </div>
             <CommentForm text={text} setText={setText} onComment={handleComment} />

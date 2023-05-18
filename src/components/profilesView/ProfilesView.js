@@ -15,9 +15,8 @@ function SimplePost({ data }) {
         <div className="simple-post">
             <img src={data.images && data.images[0].image} />
             <div className="hover-data">
-                <p>{icons.like_svg} {data.likes}</p>
-                {/* TODO: review if count is working */}
-                <p>{icons.comment} {data.count_comments}</p>
+                <p>{icons.like_svg} {data.likes_count}</p>
+                <p>{icons.comment} {data.comments_count}</p>
             </div>
         </div>
     )
@@ -28,16 +27,28 @@ function ProfileBody() {
     const { username, tab } = useParams()
     const { get, loading } = useFetch()
     const navigate = useNavigate()
+    const { auth } = useContext(AuthContext)
 
     const [posts, setPosts] = useState([])
 
+    function get_filter_for_tab(tab){
+        if (tab==='saved'){
+            return 'saved=True'
+        }else if(tab=='tagged'){
+            return '' //TODO: review how to do this
+        } else {
+            return 'user='+auth.user.id
+        }
+    }
+
     useEffect(() => {
-        get('general-post/').then(data => setPosts(data.map((i, k) => <SimplePost data={i} key={k} />)))
+        get('post/?'+get_filter_for_tab(tab)).then(data => setPosts(data.map((i, k) => <SimplePost data={i} key={k} />)))
     }, [tab]);
 
     return (
         <div className="profile-body">
             <ul className="tablist">
+                {/* TODO: review tabs */}
                 <li className={!tab ?? 'current'} onClick={() => navigate(`/${username}`)}>{icons.posts} Publicaciones</li>
                 <li className={tab === 'saved' ?? 'current'} onClick={() => navigate(`/${username}/saved`)}>{icons.save} Guardado</li>
                 <li className={tab === 'tagged' ?? 'current'} onClick={() => navigate(`/${username}/tagged`)}>{icons.tagged} Etiquetadas</li>
