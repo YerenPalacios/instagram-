@@ -11,7 +11,7 @@ export default function Home() {
     const { get, loading } = useFetch()
 
     useEffect(() => {
-        get('post/').then(data =>
+        get('post/?priority=true').then(data =>
             setPosts(data?.map((post, i) => (
                 <Post key={i} data={post} />
             )))
@@ -20,7 +20,7 @@ export default function Home() {
 
     return <Page>
         <div className="flexContainer">
-            <div>
+            <div clasName="side_container">
                 <StoriesBar />
                 {loading && <p>cargando...</p>}
                 {posts}
