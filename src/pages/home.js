@@ -20,7 +20,7 @@ export default function Home() {
 
     return <Page>
         <div className="flexContainer">
-            <div clasName="side_container">
+            <div className="side_container">
                 <StoriesBar />
                 {loading && <p>cargando...</p>}
                 {posts}

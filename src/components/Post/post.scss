@@ -11,89 +11,108 @@
     background-color: #fff;
     border: 1px solid #e6e6e6;
     margin-bottom: 25px;
+}
+.small-post {
+    z-index: 550;
+    border-radius: 5px;
+    overflow: hidden;
+    min-width: 550px;
+    width: 100%;
+    margin: 0 50px;
+    color: #262626;
+    background-color: #fff;
+    display: grid;
+    grid-template-columns: auto 350px;
 
-    .buttons {
+    &>div{
         display: flex;
-        justify-content: space-between;
-        padding: 5px;
+        flex-direction: column;
+    }
+    .comments{
+        height: -webkit-fill-available;
+    }
+}
 
-        button {
-            background-color: transparent;
-            border: none;
-            padding: 12px;
-            margin: 0 5px;
-            cursor: pointer;
 
-            :hover {
-                opacity: .7;
-            }
+.buttons {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 5px;
+
+    button {
+        background-color: transparent;
+        border: none;
+        padding: 0 10px;
+        cursor: pointer;
+
+        :hover {
+            opacity: .7;
         }
     }
+}
 
-    .text {
-        padding: 16px;
-        padding-top: 0;
-        font-size: 14px;
+.text {
+    padding: 0 16px;
+    font-size: 14px;
 
-        p:first-child {
-            margin-top: 0
-        }
+    p:first-child {
+        margin-top: 0
+    }
+}
+
+.last_text {
+    color: #8e8e8e;
+
+    :last-child {
+        font-size: 12px;
+        text-transform: capitalize;
+    }
+}
+
+.images {
+    div {
+        position: relative;
+        width: 100% !important;
     }
 
-    .last_text {
-        color: #8e8e8e;
-
-        :last-child {
-            font-size: 12px;
-            text-transform: capitalize;
-        }
+    >div>div {
+        width: 100% !important;
     }
 
-    .images {
-        div {
-            position: relative;
-            width: 100% !important;
-        }
+}
 
-        >div>div {
-            width: 100% !important;
-        }
+.head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #efefef;
 
+    button {
+        background-color: transparent;
+        border: none;
+        font-size: 20px;
+        letter-spacing: 3px;
+        color: #262626;
+        margin-right: 15px;
     }
 
-    .head {
+    .user {
         display: flex;
-        justify-content: space-between;
         align-items: center;
+        padding: 14px;
+        grid-gap: 15px;
+        font-weight: 500;
+        font-size: 15px;
 
-        button {
-            background-color: transparent;
-            border: none;
-            font-size: 20px;
-            letter-spacing: 3px;
-            color: #262626;
-            margin-right: 15px;
+        .icon {
+            @extend .image;
+            width: 35px;
+            height: 35px;
         }
 
-        .user {
-            display: flex;
-            align-items: center;
-            padding: 14px;
-            grid-gap: 15px;
-            font-weight: 500;
-            font-size: 15px;
-
-            .icon {
-                @extend .image;
-                width: 35px;
-                height: 35px;
-            }
-
-            p {
-                margin: 0;
-            }
+        p {
+            margin: 0;
         }
-
     }
 
 }
