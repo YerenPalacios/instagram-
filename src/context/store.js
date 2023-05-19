@@ -6,8 +6,8 @@ const postsReducer = (state = initialState.current_post, action) => {
     switch (action.type) {
         case 'SET_CURRENT_POST':
             return action.payload;
-        case 'DECREMENT':
-            return state - 1;
+        case 'CLEAN_POST':
+            return null;
         default:
             return state;
     }

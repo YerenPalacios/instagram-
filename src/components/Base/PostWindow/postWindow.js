@@ -1,17 +1,28 @@
 import './postWindow.scss'
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-// import SimpleImageSlider from "react-simple-image-slider/dist/ImageSlider";
+import Post from '../../Post/post';
 
 export default function PostWindow() {
-    const {current_post} = useSelector((state) => state);
+    const [hidden, setHidden] = useState(true);
+    const { current_post } = useSelector((state) => state);
 
-    if (!current_post){console.log(current_post);return null}
-        
+    const dispatch = useDispatch();
+    function cleanPost() {
+        dispatch({
+            type: "CLEAN_POST"
+        })
+    }
+
+    useEffect(() => {
+        setHidden(false)
+    }, [current_post]);
+
+    if (!current_post) { return null }
+    if (hidden) return null
+
     return <div className="post-window">
-        <div className="images">
-                <img src={current_post.images[0].image} alt="" />
-
-            </div>      
+        <Post type='small' data={current_post}></Post>
+        <div onClick={()=>{setHidden(true); cleanPost()}} className="hidden-div"></div>
     </div>
 }
