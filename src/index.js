@@ -22,6 +22,8 @@ import ExplorePeople from './pages/explorePeople';
 import PostWindow from './components/Base/PostWindow/postWindow';
 import { Provider } from 'react-redux';
 import store from './context/store';
+import VideoPage from './pages/test-video';
+
 
 i18n
   .use(initReactI18next) // passes i18n down to react-i18next
@@ -61,6 +63,7 @@ ReactDOM.render(
             <Route path="/inbox" element={<Inbox />} />
             <Route path="/inbox/:username" element={<Inbox />} />
             <Route path="/accounts" element={<Inbox />} />
+            <Route path="/video" element={<VideoPage />} />
             <Route path="*" element={<View404 />} />
           </Routes>
           <APIErrorModal></APIErrorModal>
