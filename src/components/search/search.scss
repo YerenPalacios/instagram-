@@ -1,0 +1,41 @@
+.search{
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    top:0;
+    position: relative;
+    box-sizing: border-box;
+    div{
+        box-sizing: border-box;
+        padding: 20px;
+    }
+
+    .search-head{
+        border-bottom: 2px solid #efefef;
+        height: auto;
+    }
+    h1{
+        margin: 0;
+        font-size: 23px;
+        font-weight: bold;
+    }
+    h3{
+        margin: 0;
+        font-size: 15px;
+    }
+    input{
+        width: 100%;
+        margin-top: 30px;
+    }
+    .no-data{
+        display: grid;
+        grid-template-rows: max-content auto;
+        flex-direction: column;
+        height: 100%;
+        p{
+            justify-self: center;
+            align-self: center;
+            color: #888
+        }
+    }
+}
