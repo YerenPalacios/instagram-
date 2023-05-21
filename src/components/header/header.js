@@ -8,6 +8,7 @@ import { useContext } from 'react';
 import { AuthContext } from '../../context/datacontext';
 import { getUserImage } from '../../helpers';
 import Search from '../search/search';
+import Notifications from './notifications/notifications';
 
 //todo: finish this search
 
@@ -75,7 +76,8 @@ function UserMenu() {
             <div className="user-menu" ref={ref}>
                 <div className="user-icon">
                     <img src={getUserImage(auth.user)} alt="" />
-                </div> Profile
+                </div>
+                <p className='label'>Profile</p>
                 {isVisible && (
                     <div className="menu">
                         <Link to={"/" + auth.user.username}>{ico.profile} Perfil</Link>
@@ -117,10 +119,9 @@ export default function Header() {
             setCurrentTab(component)
         }
     }
-
     return (
         <header ref={header}>
-            <div className='logo'>{ico.logo}</div>
+            <div className='logo'>{header.current?.className === 'without_labels'? ico.ig: ico.logo}</div>
             {/* <div className="search">
                 <input onBlur={handleFocus} onFocus={handleFocus} type="search" size="30" placeholder="Buscar" />
 
@@ -132,7 +133,7 @@ export default function Header() {
                 <Icon ico={ico.share} label={'Messages'} type='link' to='/inbox'/>
                 <Icon ico={ico.add} label={'Create'} onClick={() => setShowNewPostDiv(true)}/>
                 <Icon ico={ico.find} label={'Explore'} type='link' to='/explore'/>
-                <Icon ico={ico.like_svg} label={'Notifications'} onClick={()=>changeTab(<Search/>)}/>
+                <Icon ico={ico.like_svg} label={'Notifications'} onClick={()=>changeTab(<Notifications/>)}/>
                 <UserMenu />
             </div>
             {showNewPostDiv && <NewPost hide={setShowNewPostDiv}></NewPost>}

@@ -151,7 +151,7 @@ export function getUserImage(data) {
     const letter = data.username?.slice(0, 1).toUpperCase()
     const b = `<svg height="100" width="100" xmlns="http://www.w3.org/2000/svg">
     <rect width="100" height="100" style="fill:${color}" />
-    <text x="50%" y="57%" alignment-baseline="middle" fill="#fff" text-anchor="middle" font-size='50px' font-family='sans-serif'>${letter}</text>
+    <text x="50%" y="57%" alignment-baseline="middle" fill="#fff" text-anchor="middle" font-size='40px' font-family='sans-serif'>${letter}</text>
     </svg>`
     const blob = new Blob([b], { type: 'image/svg+xml' })
     const url = URL.createObjectURL(blob)
