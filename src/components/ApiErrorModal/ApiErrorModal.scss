@@ -4,10 +4,11 @@
     background-color: #2b2b2b;
     color: #ff807c;
     width: 100%;
-    padding: 5px 10px;
+    padding: 5px 30px;
     animation: error;
     translate: 1s;
     transform: translateY(100%);
+    z-index: 1000;
 }
 
 @keyframes error {
