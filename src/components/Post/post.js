@@ -29,10 +29,34 @@ function CommentForm({ onComment, setText, text }) {
     )
 }
 
+function getImage(content) {
+        const url = 'data:image/jpeg;base64,'+content
+        // debugger
+        // content = content.replace('b', '').replace("'", '')
+        
+        // var base64String = content; // Ejemplo de cadena de base64
+
+        // // Decodificar la cadena de base64
+        // var byteCharacters = atob(base64String);
+
+        // // Convertir los caracteres en un array de bytes
+        // var byteNumbers = new Array(byteCharacters.length);
+        // for (var i = 0; i < byteCharacters.length; i++) {
+        //     byteNumbers[i] = byteCharacters.charCodeAt(i);
+        // }
+        // var byteArray = new Uint8Array(byteNumbers);
+
+        // // Crear el objeto Blob
+        // var blob = new Blob([byteArray], { type: 'image/jpeg' });
+        // let url =URL.createObjectURL(blob)
+        // console.log(url)
+        return url;
+}
+
 export default function Post({ data, type }) {
     const { post, get, loading } = useFetch()
     const [options, setOptions] = useState(false)
-    const images = data.images.map(img => ({ url: img.image }))
+    const images = data.images.map(img => ({ url: getImage(img.image) }))
     var date = moment(data.created_at).fromNow()
     const [comments, setComments] = useState(null)
 
@@ -79,9 +103,9 @@ export default function Post({ data, type }) {
     }
 
     useEffect(() => {
-        if(type=='small'){
-            get('comment/?post='+data.id).then(
-                data=>setComments(data)
+        if (type == 'small') {
+            get('comment/?post=' + data.id).then(
+                data => setComments(data)
             )
         }
     }, []);
@@ -123,14 +147,14 @@ export default function Post({ data, type }) {
             <div className='icon'><img src={getUserImage(data)} alt="user" /></div>
             <p>{data.user.username}</p>
         </div>
-    {/* TODO: this button is not working in small post */}
+        {/* TODO: this button is not working in small post */}
         <button onClick={() => { setOptions(true) }}>•••</button>
     </div>
 
     const comment_form = <CommentForm text={text} setText={setText} onComment={handleComment} />
     //TODO make this with styles and add the NO comments yet.
     const comments_list = <div className="comments">
-        {comments?.map(comment=>(<div>{comment.text}</div>))}
+        {comments?.map(comment => (<div>{comment.text}</div>))}
     </div>
 
     if (type === 'small')

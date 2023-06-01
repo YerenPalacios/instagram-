@@ -9,6 +9,10 @@ import icons from "../icons"
 import NotFound from "../notFound/notFound"
 import { useDispatch } from "react-redux"
 
+function getImage(content) {
+    const url = 'data:image/jpeg;base64,'+content
+    return url;
+}
 
 function SimplePost({ data }) {
     const dispatch = useDispatch();
@@ -20,7 +24,7 @@ function SimplePost({ data }) {
     }
     return (
         <div onClick={setCurrentPost} className="simple-post">
-            <img src={data.images && data.images[0].image} />
+            <img src={data.images && getImage(data.images[0].image)} />
             <div className="hover-data">
                 <p>{icons.like_svg} {data.likes_count}</p>
                 <p>{icons.comment} {data.comments_count}</p>
@@ -42,7 +46,7 @@ function ProfileBody() {
         if (tab==='saved'){
             return 'saved=True'
         }else if(tab=='tagged'){
-            return '' //TODO: review how to do this
+            return 'scraper=1' //TODO: review how to do this
         } else {
             return 'user='+auth.user.id
         }
