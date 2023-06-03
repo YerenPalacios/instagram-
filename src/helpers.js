@@ -58,9 +58,8 @@ export const useFetch = (auto_errors = true) => {
      * @param {object} options
      */
     const runFetch = (path, options = {}) => {
-        const NO_AUTH_PATHS = [LOGIN_PATH, SIGN_PATH, '/password-reset']
-        if (NO_AUTH_PATHS.includes(path) && !auth)
-            return navigate('/login')
+        const AUTH_PATHS = ['/login', '/password-reset']
+        if (!AUTH_PATHS.includes(window.location.pathname) && !auth) throw navigate('/login')
 
         return fetch(
             api.url + path, { signal: controller?.signal, ...options },

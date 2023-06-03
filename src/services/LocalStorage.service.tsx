@@ -1,12 +1,11 @@
 export const LocalStorage = {
-    get(key) {
+    get(key: string): Auth | undefined {
         let item = localStorage.getItem(key)
         if (item && item !== 'undefined') return JSON.parse(item)
     },
-    set(key, value) {
-        value = JSON.stringify(value)
-        localStorage.setItem(key, value)
+    set(key: string, value: Auth) {
+        localStorage.setItem(key, JSON.stringify(value))
     },
-    remove(key) { localStorage.removeItem(key) },
+    remove(key: string) { localStorage.removeItem(key) },
     clear() { localStorage.clear() },
 }
