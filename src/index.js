@@ -22,6 +22,7 @@ import ExplorePeople from './pages/explorePeople';
 import PostWindow from './components/Base/PostWindow/postWindow';
 import { Provider } from 'react-redux';
 import store from './context/store';
+import ResetPasswordForm from './pages/password-reset';
 
 i18n
   .use(initReactI18next) // passes i18n down to react-i18next
@@ -52,6 +53,7 @@ ReactDOM.render(
 
           <Routes>
             <Route path="/login" element={<Login />} />
+            <Route path="/password-reset" element={<ResetPasswordForm />} />
             <Route path="/" element={<Home />} />
             <Route path="/:username" element={<Profile />} />
             <Route path="/edit" element={<Edit />} />
