@@ -1,3 +1,4 @@
+import React, { FormEvent } from 'react'
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import './loginForm.scss'
@@ -11,20 +12,21 @@ function RegForm() {
     const { setAuth } = useContext(AuthContext)
     const { sign } = useFetch()
 
-    const email_or_tel = useRef()
-    const nameInput = useRef()
-    const usernameInput = useRef()
-    const passInput = useRef()
 
-    const handleSign = e => {
+    const email_or_tel = useRef<HTMLInputElement | null>(null)
+    const nameInput = useRef<HTMLInputElement | null>(null)
+    const usernameInput = useRef<HTMLInputElement | null>(null)
+    const passInput = useRef<HTMLInputElement | null>(null)
+
+    const handleSign = (e: FormEvent) => {
         e.preventDefault()
-        let email = email_or_tel.current.value.includes('@') && email_or_tel.current.value
-        let phone = !email_or_tel.current.value.includes('@') && email_or_tel.current.value;
-        let name = nameInput.current.value
-        let username = usernameInput.current.value
-        let password = passInput.current.value
+        let email: string = email_or_tel.current?.value.includes('@') ? email_or_tel.current?.value: ''
+        let phone: string | undefined = !email_or_tel.current?.value.includes('@') ? email_or_tel.current?.value: '';
+        let name: string | undefined = nameInput.current?.value
+        let username: string | undefined = usernameInput.current?.value
+        let password: string | undefined = passInput.current?.value
 
-        if (email.length || phone.length && name.length && password.length) {
+        if (email?.length || phone?.length && name?.length && password?.length) {
             sign({ ...email ? { email } : { phone }, name, username, password }).then(data => {
                 LocalStorage.set('auth', data)
                 setAuth(data)
@@ -51,14 +53,14 @@ function LoginForm() {
     const navigate = useNavigate()
     const { login } = useFetch()
     const { setAuth } = useContext(AuthContext)
-    const emailInput = useRef()
-    const passInput = useRef()
+    const emailInput = useRef<HTMLInputElement | null>(null)
+    const passInput = useRef<HTMLInputElement | null>(null)
 
-    const handleLogin = (e) => {
-        let email = emailInput.current.value
-        let password = passInput.current.value
+    const handleLogin = (e: FormEvent) => {
+        let email: string = emailInput.current?.value ?? ''
+        let password: string = passInput.current?.value ?? ''
         e.preventDefault()
-        if (email.length > 0 && password.length > 0)
+        if (email.length > 0 && password.length > 0) {
             login({ email, password }).then(data => {
                 if (data) {
                     LocalStorage.set('auth', data)
@@ -67,6 +69,7 @@ function LoginForm() {
                 }
 
             })
+        }
     }
 
     return (
@@ -82,7 +85,7 @@ function LoginForm() {
                     <span></span>
                 </div>
                 <a className="link2" href="/password-reset">¿Olvidaste tu contraseña?</a>
-                
+
             </div>
         </form>
     )
@@ -108,8 +111,8 @@ export default function FormContainer() {
         </div>
         <div className="block">
             {form === 'reg' ?
-                <p>¿Tienes una cuenta? <span href="#" onClick={toggleForm}>Inicia sesión</span></p> :
-                <p>¿No tienes una cuenta? <span onClick={toggleForm} href="#">Registrate</span></p>
+                <p>¿Tienes una cuenta? <span onClick={toggleForm}>Inicia sesión</span></p> :
+                <p>¿No tienes una cuenta? <span onClick={toggleForm} >Registrate</span></p>
             }
         </div>
     </div>
