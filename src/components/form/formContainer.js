@@ -72,10 +72,17 @@ function LoginForm() {
     return (
         <form>
             <div className="inputs">
+                {/* TODO: add label in inputs */}
                 <input type="text" name="email" ref={emailInput} placeholder="Teléfono, usuario o correo electrónico" />
                 <input type="password" name="password" ref={passInput} placeholder="Contraseña" />
                 <button onClick={handleLogin}>Iniciar sesión</button>
-                <a className="link2" href="#">¿Olvidaste tu contraseña?</a>
+                <div className="or">
+                    <span></span>
+                    <p>OR</p>
+                    <span></span>
+                </div>
+                <a className="link2" href="/password-reset">¿Olvidaste tu contraseña?</a>
+                
             </div>
         </form>
     )

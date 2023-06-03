@@ -3,14 +3,22 @@ import { createContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { LocalStorage } from "../services/LocalStorage.service";
 
+const NO_AUTH_PATH = [
+  '/login', '/password-reset'
+]
+
 export const AuthContext = createContext()
 
 export const AuthProvider = ({ children }) => {
-    const navigate = useNavigate()
+  const navigate = useNavigate()
     const [auth, setAuth] = useState(LocalStorage.get('auth'))
-    if (!auth && !window.location.href.includes('/login')) window.location.href = '/login'
     useEffect(() => {
-      !auth ?? navigate('/login')
+
+      if (!NO_AUTH_PATH.includes(window.location.pathname)){
+        console.warn(NO_AUTH_PATH.includes(window.location.pathname), window.location.pathname)
+        !auth ?? navigate('/login')
+      }
+      
     }, [])
     
     return <AuthContext.Provider value={{ auth, setAuth, }}>{children}</AuthContext.Provider>

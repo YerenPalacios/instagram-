@@ -2,9 +2,9 @@
     color: #262626;
     background-color: #fff;
     border: 1px solid #e6e6e6;
-    max-width: 340px;
+    max-width: 360px;
     margin: 15px auto;
-    padding: 30px 50px;
+    padding: 20px 45px;
     text-align: center;
     font-size: 14px;
 
@@ -17,7 +17,7 @@
 
     .logo {
         width: 200px;
-        margin-bottom: 10px;
+        margin: 20px;
     }
 
     span {
@@ -43,13 +43,34 @@
     .inputs {
         display: grid;
         grid-gap: 10px;
+        width: 260px;
     }
 
     .link2 {
         color: #00376b;
         font-size: 12px;
-        margin-top: 10px;
+        margin-bottom: 10px;
         font-weight: 400;
+    }
+
+    .or {
+        margin: 10px 0;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+
+        p {
+            color: #737373;
+            font-weight: 600;
+            font-size: 12px;
+        }
+
+        span {
+            display: block;
+            width: 10px;
+            border-top: 1px solid #ccc;
+            width: 100%;
+        }
     }
 
     input {
@@ -69,4 +90,14 @@
         font-weight: 100;
         color: #ed4956
     }
+
+    p {
+        margin: 0;
+    }
+}
+
+.form-container{
+    width: 100vw;
+    display: grid;
+    place-items: center;
 }

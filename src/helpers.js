@@ -58,7 +58,8 @@ export const useFetch = (auto_errors = true) => {
      * @param {object} options
      */
     const runFetch = (path, options = {}) => {
-        if (path !== LOGIN_PATH && path !== SIGN_PATH && !auth)
+        const NO_AUTH_PATHS = [LOGIN_PATH, SIGN_PATH, '/password-reset']
+        if (NO_AUTH_PATHS.includes(path) && !auth)
             return navigate('/login')
 
         return fetch(
@@ -112,6 +113,19 @@ export const useFetch = (auto_errors = true) => {
         return runFetch(path, options)
     }
 
+    const sendRecoveryEmail = (body) => {
+        setLoading(true);
+        const options = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(body)
+        }
+
+        return runFetch('/recovery-password', options)
+    }
+
     const post = (path, body = {}) => {
         setLoading(true);
         const options = {
@@ -140,7 +154,7 @@ export const useFetch = (auto_errors = true) => {
         return runFetch(path, options)
     }
 
-    return { get, post, remove, login, sign, error, loading, setLoading };
+    return { get, post, remove, login, sign, error, loading, setLoading, sendRecoveryEmail};
 }
 
 export function getUserImage(data) {
