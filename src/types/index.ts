@@ -1,7 +1,7 @@
 type User = {
     description: string,
     email: string
-    following: boolean,
+    is_following: boolean,
     id: number,
     image: string,
     is_active: boolean,
