@@ -1,7 +1,8 @@
 import './post.scss'
+import React from 'react'
 import { useState } from 'react'
 import moment from 'moment'
-import { default as ico } from './../icons'
+import { default as ico } from '../icons'
 import { useFetch } from '../../helpers'
 import PostOptions from '../postOptions/postOptions';
 import ImageSlider from '../Base/ImageSlider/ImageSlider'
@@ -11,11 +12,19 @@ import { useEffect } from 'react'
 
 // TODO: posts must have just user comments in main view
 
-function CommentForm({ onComment, setText, text }) {
+type CommentFormProps = {
+    onComment: () => void;
+    setText: (text: string) => void;
+    text: string;
+};
 
-    const handleEnter = (e) => {
-        if (e.key === 'Enter') {
-            e.target.value = ''
+
+function CommentForm({ onComment, setText, text }: CommentFormProps) {
+
+    const handleEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        console.log(e)
+        if (e.key === 'Enter' && e.target) {
+            e.currentTarget.value = ''
             onComment()
         }
     }
@@ -23,32 +32,32 @@ function CommentForm({ onComment, setText, text }) {
     return (
         <div className="add_comment">
             <button>{ico.face}</button>
-            <input onKeyDown={handleEnter} onInput={e => setText(e.target.value)} type="text" value={text} placeholder="Agrega un comentario..." />
+            <input onKeyDown={handleEnter} onInput={e => setText(e.currentTarget.value)} type="text" value={text} placeholder="Agrega un comentario..." />
             <button onClick={onComment}>Publicar</button>
         </div>
     )
 }
 
-export default function Post({ data, type }) {
+export default function Post({ data, type }: { data: Post, type: string }) {
     const { post, get, loading } = useFetch()
     const [options, setOptions] = useState(false)
     const images = data.images.map(img => ({ url: img.image }))
     var date = moment(data.created_at).fromNow()
-    const [comments, setComments] = useState(null)
+    const [comments, setComments] = useState<PostComment[]>([])
 
-    function mapComments(comments) {
-        return comments.map((c, i) => (
-            <p key={i} className="comment"><b>{c.user.name} </b>{c.text}</p>
-        ))
-    }
+    // function mapComments(comments: PostComment[]) {
+    //     return comments.map((c, i) => (
+    //         <p key={i} className="comment"><b>{c.user.name} </b>{c.text}</p>
+    //     ))
+    // }
 
     const [liked, setLiked] = useState(data.is_liked)
     const [saved, setSaved] = useState(data.is_saved)
     const [numLikes, setNumLikes] = useState(data.likes_count)
-    const [userComments, setUserComments] = useState({
-        comments: mapComments([]),
-        count: data.count_comments
-    })
+    // const [userComments, setUserComments] = useState({
+    //     comments: mapComments([]),
+    //     count: data.comments_count
+    // })
     const dispatch = useDispatch();
 
     const [text, setText] = useState('')
@@ -69,19 +78,19 @@ export default function Post({ data, type }) {
     }
 
     const handleComment = () => {
-        post('comment/', { post: data.id, text: text }).then(data => {
-            if (data.comments) {
+        post('comment/', { post: data.id, text: text }).then((data: PostComment) => {
+            if (data) {
                 //TODO: make this works
-                setComments({})
+                setComments([data, ...comments])
                 setText('')
             }
         })
     }
 
     useEffect(() => {
-        if(type=='small'){
-            get('comment/?post='+data.id).then(
-                data=>setComments(data)
+        if (type == 'small') {
+            get('comment/?post=' + data.id).then(
+                data => setComments(data)
             )
         }
     }, []);
@@ -120,17 +129,30 @@ export default function Post({ data, type }) {
     </div>
     const head = <div className="head">
         <div className="user">
-            <div className='icon'><img src={getUserImage(data)} alt="user" /></div>
+            <div className='icon'><img src={getUserImage(data.user)} alt="user" /></div>
             <p>{data.user.username}</p>
         </div>
-    {/* TODO: this button is not working in small post */}
+        {/* TODO: this button is not working in small post */}
         <button onClick={() => { setOptions(true) }}>•••</button>
     </div>
 
     const comment_form = <CommentForm text={text} setText={setText} onComment={handleComment} />
     //TODO make this with styles and add the NO comments yet.
     const comments_list = <div className="comments">
-        {comments?.map(comment=>(<div>{comment.text}</div>))}
+        {comments?.map((comment: PostComment, key: number) => (
+            <div key={key} className='comment'>
+                <div className="small_image">
+                    <img src={getUserImage(comment.user)} alt="" />
+                </div>
+                <div className='comment_info'>
+                    <p><b>{comment.user.username}</b>&nbsp;{comment.text}</p>
+                    <p className='info'><span>{moment(comment.created_at).fromNow(true)}</span><button>0 likes</button><button>Reply</button></p>
+                </div>
+                <div className="comment_like">
+                    {comment.is_liked ? ico.liked_svg : ico.like_svg}
+                </div>
+            </div>
+        ))}
     </div>
 
     if (type === 'small')

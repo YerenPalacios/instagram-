@@ -21,6 +21,22 @@ p {
     }
 }
 
+.small_image {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    overflow: hidden;
+    display: grid;
+    align-items: center;
+
+    img {
+        width: 100%;
+        height: 100%;
+        display: block;
+        object-fit: cover;
+    }
+}
+
 .commonButton {
     padding: 8px 18px;
     border-radius: 10px;

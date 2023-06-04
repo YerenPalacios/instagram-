@@ -160,13 +160,12 @@ export const useFetch = (auto_errors = true) => {
     return { get, post, remove, login, sign, error, loading, setLoading, sendRecoveryEmail };
 }
 
-export function getUserImage(data: User) {
+export function getUserImage(user: User){
     // TODO: add user color field??
-    if (data.image) return data.image.includes('http') ? data.image : API_URL + data.image
-    const color = '#' + Math.floor(Math.random() * 16777215).toString(16);
-    const letter = data.username?.slice(0, 1).toUpperCase()
+    if (user.image) return user.image.includes('http') ? user.image : API_URL + user.image
+    const letter = user.username?.slice(0, 1).toUpperCase()
     const b = `<svg height="100" width="100" xmlns="http://www.w3.org/2000/svg">
-    <rect width="100" height="100" style="fill:${color}" />
+    <rect width="100" height="100" style="fill:${user.color}" />
     <text x="50%" y="57%" alignment-baseline="middle" fill="#fff" text-anchor="middle" font-size='40px' font-family='sans-serif'>${letter}</text>
     </svg>`
     const blob = new Blob([b], { type: 'image/svg+xml' })
