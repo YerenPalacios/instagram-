@@ -1,5 +1,5 @@
 import './post.scss'
-import React from 'react'
+import React, { useRef } from 'react'
 import { useState } from 'react'
 import moment from 'moment'
 import { default as ico } from '../icons'
@@ -44,6 +44,7 @@ export default function Post({ data, type }: { data: Post, type: string }) {
     const images = data.images.map(img => ({ url: img.image }))
     var date = moment(data.created_at).fromNow()
     const [comments, setComments] = useState<PostComment[]>([])
+    const likeButton = useRef<HTMLButtonElement>(null)
 
     // function mapComments(comments: PostComment[]) {
     //     return comments.map((c, i) => (
@@ -67,6 +68,9 @@ export default function Post({ data, type }: { data: Post, type: string }) {
         post('like/', { post: data.id }).then(data => {
             data.liked ? setNumLikes(numLikes + 1) : setNumLikes(numLikes - 1)
             setLiked(data.liked)
+            likeButton.current?.classList.remove('like-animation')
+            void likeButton.current?.offsetWidth
+            likeButton.current?.classList.add('like-animation')
         })
     }
 
@@ -105,7 +109,7 @@ export default function Post({ data, type }: { data: Post, type: string }) {
 
     const buttons = <div className="buttons">
         <div>
-            <button onClick={handleLike}>
+            <button ref={likeButton} onClick={handleLike}>
                 {liked ? ico.liked_svg : ico.like_svg}
             </button>
             <button onClick={setCurrentPost}>{ico.comment}</button>
