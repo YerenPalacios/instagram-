@@ -1,19 +1,20 @@
-import { useState, useEffect } from 'react'
+import { useEffect, useContext } from 'react'
 import Post from '../components/Post/post'
 import StoriesBar from '../components/home/storiesBar/storiesBar'
 import './pages.scss'
 import { useFetch } from '../helpers'
 import Page from '../components/page/page'
 import HomeSide from '../components/home/homeSide/HomeSide'
+import { PostContext } from '../context/datacontext'
 
 export default function Home() {
-    const [posts, setPosts] = useState([])
     const { get, loading } = useFetch()
+    const { posts, setPosts } = useContext(PostContext)
 
     useEffect(() => {
         get('post/?priority=true').then(data =>
             setPosts(data?.map((post, i) => (
-                <Post key={i} data={post} />
+                <Post key={data.id} data={post} />
             )))
         )
     }, [])
@@ -25,7 +26,8 @@ export default function Home() {
                 {loading && <p>cargando...</p>}
                 {posts}
             </div>
-            <HomeSide/>
+            <HomeSide />
         </div>
     </Page>
+
 }

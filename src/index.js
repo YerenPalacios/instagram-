@@ -15,7 +15,7 @@ import View404 from './pages/404';
 import { initReactI18next } from 'react-i18next'
 import LanguageDetector from 'i18next-browser-languagedetector';
 import i18n from 'i18next'
-import { ApiErrorProvider, AuthProvider } from './context/datacontext';
+import { ApiErrorProvider, AuthProvider, PostProvider } from './context/datacontext';
 import { APIErrorModal } from './components/ApiErrorModal/ApiErrorModal';
 import Explore from './pages/explore';
 import ExplorePeople from './pages/explorePeople';
@@ -50,6 +50,7 @@ ReactDOM.render(
     <Provider store={store}>
       <AuthProvider>
         <ApiErrorProvider>
+        <PostProvider>
 
           <Routes>
             <Route path="/login" element={<Login />} />
@@ -67,6 +68,7 @@ ReactDOM.render(
           </Routes>
           <APIErrorModal></APIErrorModal>
           <PostWindow></PostWindow>
+          </PostProvider>
         </ApiErrorProvider>
       </AuthProvider>
     </Provider>
