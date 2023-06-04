@@ -30,7 +30,7 @@ type ErrorContextProps = {
   setError: (value: string) => void
 };
 
-export const ApiErrorContext = createContext<ErrorContextProps | undefined>(undefined)
+export const ApiErrorContext = createContext<ErrorContextProps>({error: '', setError: ()=>{}})
 
 export const ApiErrorProvider: React.FC = ({ children }) => {
   const [error, setError] = useState("")

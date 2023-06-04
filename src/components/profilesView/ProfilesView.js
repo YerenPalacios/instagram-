@@ -44,7 +44,7 @@ function ProfileBody() {
         }else if(tab=='tagged'){
             return '' //TODO: review how to do this
         } else {
-            return 'user='+auth.user.id
+            return 'user='+auth?.user.id
         }
     }
 
