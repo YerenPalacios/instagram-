@@ -2,37 +2,12 @@ import { default as ico } from '../icons'
 import './header.scss'
 import { useState, useEffect, useRef } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import gif from './ZKZg.gif'
 import NewPost from '../newPost/newPost';
 import { useContext } from 'react';
 import { AuthContext } from '../../context/datacontext';
 import { getUserImage } from '../../helpers';
 import Search from '../search/search';
 import Notifications from './notifications/notifications';
-
-//todo: finish this search
-
-// function Search({ users, loading }) {
-//     const usersList = users?.map((e, i) => (
-//         <div key={i} className="user">
-//             <img src="https://upload.wikimedia.org/wikipedia/commons/1/1f/Woman_1.jpg" alt="" />
-//             <div>
-//                 <p>TestUserName</p>
-//                 <p>User name</p>
-//             </div>
-//         </div>
-//     ))
-//     return (
-//         <div className="search-list">
-//             {!loading ?
-//                 usersList
-//                 : <div className="loading">
-//                     <img src={gif} alt="" />
-//                 </div>
-//             }
-//         </div>
-//     )
-// }
 
 function useComponentVisible(initialIsVisible) {
     const [isVisible, setIsComponentVisible] = useState(initialIsVisible);
@@ -93,25 +68,12 @@ function UserMenu() {
 }
 
 export default function Header() {
-    const location = useLocation()
-    const current = location.pathname
-    const [usersList, setUsersList] = useState([1])
-    const [showList, setShowList] = useState(false)
-    const [listLoading, setListLoading] = useState(false)
     const [showNewPostDiv, setShowNewPostDiv] = useState(false);
     const [currentTab, setCurrentTab] = useState();
     const header = useRef()
 
-    const handleFocus = () => {
-        setShowList(!showList)
-    }
-
-    const getCurrent = (e)=>{
-        if (current === e) return 'current'
-    }
-
-    const changeTab = (component) =>{
-        if (currentTab?.type == component?.type){
+    const changeTab = (component) => {
+        if (currentTab?.type == component?.type) {
             header.current?.classList.remove('without_labels')
             setCurrentTab(undefined)
         } else {
@@ -121,19 +83,14 @@ export default function Header() {
     }
     return (
         <header ref={header}>
-            <div className='logo'>{header.current?.className === 'without_labels'? ico.ig: ico.logo}</div>
-            {/* <div className="search">
-                <input onBlur={handleFocus} onFocus={handleFocus} type="search" size="30" placeholder="Buscar" />
-
-                {showList && <Search loading={listLoading} users={usersList} />}
-            </div> */}
+            <div className='logo'>{header.current?.className === 'without_labels' ? ico.ig : ico.logo}</div>
             <div className="icons">
-                <Icon ico={ico.home} label={'Home'} type='link' to='/'/>
-                <Icon ico={ico.search} label={'Search'} onClick={()=>changeTab(<Search/>)}/>
-                <Icon ico={ico.share} label={'Messages'} type='link' to='/inbox'/>
-                <Icon ico={ico.add} label={'Create'} onClick={() => setShowNewPostDiv(true)}/>
-                <Icon ico={ico.find} label={'Explore'} type='link' to='/explore'/>
-                <Icon ico={ico.like_svg} label={'Notifications'} onClick={()=>changeTab(<Notifications/>)}/>
+                <Icon ico={ico.home} label={'Home'} type='link' to='/' />
+                <Icon ico={ico.search} label={'Search'} onClick={() => changeTab(<Search />)} />
+                <Icon ico={ico.share} label={'Messages'} type='link' to='/inbox' />
+                <Icon ico={ico.add} label={'Create'} onClick={() => setShowNewPostDiv(true)} />
+                <Icon ico={ico.find} label={'Explore'} type='link' to='/explore' />
+                <Icon ico={ico.like_svg} label={'Notifications'} onClick={() => changeTab(<Notifications />)} />
                 <UserMenu />
             </div>
             {showNewPostDiv && <NewPost hide={setShowNewPostDiv}></NewPost>}
@@ -145,15 +102,15 @@ export default function Header() {
     )
 }
 
-function Icon({ico,label,type='button', to='/',onClick=undefined}){
+function Icon({ ico, label, type = 'button', to = '/', onClick = undefined }) {
     const location = useLocation()
-    const getCurrent = (e)=>{
+    const getCurrent = (e) => {
         if (location.pathname === e) return 'current'
     }
     switch (type) {
         case 'link':
             return <Link className={getCurrent(to)} to={to}>{ico} <span>{label}</span></Link>
-    
+
         default:
             return <button onClick={onClick}>{ico} <span>{label}</span></button>
     }

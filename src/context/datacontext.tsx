@@ -13,7 +13,7 @@ type AuthContextProps = {
   setAuth: (value: Auth) => void
 };
 
-export const AuthContext = createContext<AuthContextProps>({auth: undefined, setAuth: ()=>{}})
+export const AuthContext = createContext<AuthContextProps>({ auth: undefined, setAuth: () => { } })
 
 export const AuthProvider: React.FC = ({ children }) => {
   const navigate = useNavigate()
@@ -27,12 +27,25 @@ export const AuthProvider: React.FC = ({ children }) => {
 
 type ErrorContextProps = {
   error: string,
-  setError: (value: string | "") => void
+  setError: (value: string) => void
 };
 
-export const ApiErrorContext = createContext<ErrorContextProps>({error: '', setError: ()=>{}})
+export const ApiErrorContext = createContext<ErrorContextProps>({ error: '', setError: () => { } })
 
 export const ApiErrorProvider: React.FC = ({ children }) => {
   const [error, setError] = useState("")
   return <ApiErrorContext.Provider value={{ error, setError }}>{children}</ApiErrorContext.Provider>
+}
+
+
+type PostContextProps = {
+  posts: Post[],
+  setPosts: (posts: []) => void
+};
+
+export const PostContext = createContext<PostContextProps>({ posts: [], setPosts: () => { } })
+
+export const PostProvider: React.FC = ({ children }) => {
+  const [posts, setPosts] = useState([])
+  return <PostContext.Provider value={{ posts, setPosts }}>{children}</PostContext.Provider>
 }
