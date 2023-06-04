@@ -26,8 +26,8 @@ export const AuthProvider: React.FC = ({ children }) => {
 }
 
 type ErrorContextProps = {
-  error: string;
-  setError: (value: string) => void
+  error: string,
+  setError: (value: string | "") => void
 };
 
 export const ApiErrorContext = createContext<ErrorContextProps>({error: '', setError: ()=>{}})
