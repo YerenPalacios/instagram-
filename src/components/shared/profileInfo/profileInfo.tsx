@@ -1,15 +1,16 @@
+import React from 'react'
 import './profileInfo.scss'
 import { useState } from "react"
 import { getUserImage, useFetch } from "../../../helpers"
 import { Link } from 'react-router-dom'
 
-export function ProfileInfo({ data, style }) {
+export function ProfileInfo({ data, style }: {data: User, style: string}) {
     const { post, remove, loading } = useFetch()
     const [following, setFollowing] = useState(data.following)
     // TODO: origanize this big and small style
     const btnClass = style === "bigger" ? "commonButton" : "simpleButton"
 
-    const handleFollow = (e) => {
+    const handleFollow = () => {
         if (loading) return
         let body = { "following": data.id }
         if (!following)

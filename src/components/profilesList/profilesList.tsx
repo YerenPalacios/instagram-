@@ -1,14 +1,16 @@
+import React from 'react'
 import { useState, useEffect } from "react";
 import { useFetch } from "../../helpers";
 import { ProfileInfo } from "../shared/profileInfo/profileInfo";
 
-export default function ProfilesList() {
+export default function ProfilesList({ limit = null }: {limit: number | null}) {
     const { get } = useFetch()
     const [users, setUsers] = useState([])
 
     useEffect(() => {
-        get('user/').then(data => {
-            setUsers(data.map(i => <ProfileInfo style='bigger' key={i.id} data={i} />))
+        let page_size = limit ? `page_size=${limit}` : ''
+        get('user/?' + page_size).then(data => {
+            setUsers(data.map((i: User) => <ProfileInfo style='bigger' key={i.id} data={i} />))
         })
     }, [])
 
