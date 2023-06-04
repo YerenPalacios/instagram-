@@ -1,17 +1,16 @@
 import './ApiErrorModal.scss'
-
-import { useEffect } from 'react';
-import { useContext } from 'react';
+import React from 'react'
+import { useEffect, useContext } from 'react';
 import { ApiErrorContext } from '../../context/datacontext';
 
 export function APIErrorModal() {
-  const modalDuration = 5
+  const modalDuration: number = 5
   const errorContext = useContext(ApiErrorContext)
 
   useEffect(() => {
     if (errorContext.error)
       setTimeout(() => {
-        errorContext.setError(null)
+        errorContext.setError("")
       }, modalDuration * 1000);
   }, [errorContext])
 
