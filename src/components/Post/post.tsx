@@ -1,6 +1,5 @@
 import './post.scss'
-import React, { useRef } from 'react'
-import { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import moment from 'moment'
 import { default as ico } from '../icons'
 import { useFetch } from '../../helpers'
@@ -38,10 +37,10 @@ function CommentForm({ onComment, setText, text }: CommentFormProps) {
     )
 }
 
-export default function Post({ data, type }: { data: Post, type: string }) {
+export default function Post({ data, type}: { data: Post, type?: string }) {
     const { post, get, loading } = useFetch()
     const [options, setOptions] = useState(false)
-    const images = data.images.map(img => ({ url: img.image }))
+    const images = data?.images.map(img => ({ url: img.image }))
     var date = moment(data.created_at).fromNow()
     const [comments, setComments] = useState<PostComment[]>([])
     const likeButton = useRef<HTMLButtonElement>(null)
